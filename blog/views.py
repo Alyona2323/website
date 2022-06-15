@@ -1,0 +1,283 @@
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.http.response import HttpResponse, JsonResponse
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views.decorators.http import require_POST
+from django.views.generic.base import TemplateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from rest_framework.reverse import reverse_lazy
+from .models import Post, Category, Comment
+from .forms import PostForm, CommentForm, UserRegistrationForm, LoginForm
+from django.utils.timezone import now
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin, UserPassesTestMixin
+from django.db.models import Count
+
+
+def login_view(request):
+    form = LoginForm()
+    if request.method == 'GET':
+        return render(request, 'registration/login.html', {'form': form})
+    elif request.method == 'POST':
+        try:
+            user = authenticate(username=request.POST.get('login'),
+                                password=request.POST.get('password'))
+            if user:
+                login(request, user)
+        except Exception as e:
+            print(e)
+            return render(request, 'blog/login.html', {'form': LoginForm(data=request.POST)})
+        next = request.GET.get('next', 'index')
+        return redirect(next)
+
+
+def logout_view(request):
+    logout(request)
+    return redirect("index")
+
+
+def post(request, id=None):
+    p = get_object_or_404(Post, pk=id)
+    context = {"post": p}
+    context.update(get_categories())
+    return render(request, "blog/post.html", context)
+
+# def get_categories():
+#     all_categories = Category.objects.all()
+#     count = all_categories.count()
+#     half = count // 2 + count % 2
+#     first_half = all_categories[:half]
+#     second_half = all_categories[half:]
+#     return {"cat1": first_half, "cat2": second_half}
+
+def get_categories():
+    all_categories = Category.objects.all()
+    count = all_categories.count()
+    part = count // 6 + count % 6
+    part_1 = all_categories[part:]
+    part_2 = all_categories[:part:]
+    part_3 = all_categories[:part:]
+    part_4 = all_categories[:part:]
+    part_5 = all_categories[:part:]
+    part_6 = all_categories[:part]
+    return {"cat1": part_1, "cat2": part_2, "cat3": part_3, "cat4": part_4, "cat5": part_5, "cat6": part_6}
+
+
+# def index(request):
+#     all_posts = Post.objects.all().order_by("-published_date")
+#     paginator = Paginator(all_posts, 6)
+#     page = request.GET.get('page')
+#     try:
+#         posts = paginator.page(page)
+#     except PageNotAnInteger:
+#         posts = paginator.page(1)
+#     except EmptyPage:
+#         posts = paginator.page(paginator.num_pages)
+#
+#     context = {"posts": posts}
+#     context.update(get_categories())
+#     return render(request, "blog/index.html", context)
+
+def index(request):
+    all_posts = Post.objects.all().order_by("-published_date")
+    paginator = Paginator(all_posts, 8)
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    context = {'posts': posts}
+    context.update(get_categories())
+    return render(request, "blog/index.html", context)
+
+# def post2(request):
+#     context = {
+#         'user': Post.objects.filter(user=request.user)
+#     }
+#
+#     return render(request, 'index.html', context)
+
+def about(request):
+    return render(request, 'blog/about.html')
+
+
+def category(request, id=None):
+    posts = Post.objects.filter(category__pk=id).order_by("-published_date")
+    context = {"posts": posts}
+    context.update(get_categories())
+    return render(request, "blog/index.html", context)
+
+
+def search(request):
+    print(request.method)
+    print(request.POST)
+
+    if request.method == 'POST':
+        query = request.POST['query']
+        posts = Post.objects.filter(content__icontains=query).order_by("-published_date")
+    else:
+        posts = []
+
+    context = {"posts": posts}
+    context.update(get_categories())
+    return render(request, "blog/index.html", context)
+
+
+
+
+@login_required
+def create(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+
+        print(form)
+        if form.is_valid():
+            p = form.save(commit=False)
+            p.published_date = now()
+            p.user = request.user
+            p.save()
+            print("saved", p)
+            return redirect("index")
+        else:
+            return render(request, "blog/create.html", {"form": form})
+    form = PostForm()
+    return render(request, "blog/create.html", {"form": form})
+
+
+@login_required
+@require_POST
+def like(request, id):
+    if request.method == 'POST':
+        user = request.user
+        post = get_object_or_404(Post, pk=id)
+        if post.likes.filter(id=user.id).exists():
+            post.likes.remove(user)
+            message = 'Забрати свій лайк з новини'
+        else:
+            post.likes.add(user)
+            message = 'Вам сподобалась ця новина'
+    context = {'likes_count': post.total_likes(), 'message': message}
+    return JsonResponse(context)
+
+
+class OnlyForAuthenticatedUsersView(PermissionRequiredMixin, TemplateView):
+    permission_required = 'blog.post_confirm_delete'
+    template_name = 'registration/secured.html'
+    login_url = reverse_lazy('login')
+    extra_context = {'title': 'Тільки для авторизованих користувачів!'}
+
+
+def register_user(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            new_user = form.save(commit=False)
+            new_user.set_password(form.cleaned_data['password'])
+            new_user.save()
+            return render(request, 'registration/register_done.html', {'new_user': new_user})
+    else:
+        form = UserRegistrationForm()
+    return render(request, 'registration/register.html', {'form': form})
+
+
+class PostComment(LoginRequiredMixin, CreateView):
+    form = CommentForm
+    model = Comment
+    login_url = reverse_lazy('login')
+    template_name = "blog/post_comment.html"
+    extra_context = {'title': 'Коментар до новини'}
+    fields = {'text', }
+    success_url = reverse_lazy('index')
+
+    def post(self, request, id, *args, **kwargs):
+        comment = Comment(text=request.POST.get('text'))
+        post = Post.objects.get(pk=id)
+        comment.post = post
+        comment.user = request.user
+        comment.save()
+        return redirect("index")
+
+
+
+
+class UpdatePostView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
+    model = Post
+    template_name = "blog/create.html"
+    login_url = reverse_lazy('login')
+    extra_context = {'title': 'Редагувати пост'}
+    fields = ('title', 'content', 'category', 'img',)
+    success_url = reverse_lazy('index')
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.user:
+            return True
+        return False
+
+
+class DeletePostView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
+    model = Post
+    login_url = reverse_lazy('login')
+    success_url = reverse_lazy('index')
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.user:
+            return True
+        return False
+
+
+# class UpdateCommentView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
+#     model = Comment
+#     template_name = "blog/post_comment.html"
+#     login_url = reverse_lazy('login')
+#     extra_context = {'title': 'Редагувати коментар'}
+#     fields = '__all__'
+#     success_url = reverse_lazy('index')
+#
+#     def test_func(self):
+#         comment = self.get_object()
+#         if self.request.user == comment.user:
+#             return True
+#         return False
+
+
+class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):  # Редактирование комментария
+    model = Comment
+    fields = ('title', 'text')
+    template_name = 'post_comment.html'
+    success_url = reverse_lazy('index')
+    extra_context = {'title': 'Comment edit'}
+    login_url = reverse_lazy('login')
+
+    def test_func(self):
+        comment_id = self.kwargs['pk']
+        user = self.request.user
+        comment = Comment.objects.get(pk=comment_id)
+        if comment.user == user:
+            return True
+        elif self.request.user.is_staff or self.request.user.is_superuser:
+            return True
+        return False
+
+
+class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):  # Удаление комментария
+    model = Comment
+    template_name = 'post_comment.html'
+    success_url = reverse_lazy('index')
+    extra_context = {'title': 'Comment delete'}
+    login_url = reverse_lazy('login')
+
+    def test_func(self):
+        comment_id = self.kwargs['pk']
+        user = self.request.user
+        comment = Comment.objects.get(id=comment_id)
+        if comment.user == user:
+            return True
+        elif self.request.user.is_staff or self.request.user.is_superuser:
+            return True
+        return False

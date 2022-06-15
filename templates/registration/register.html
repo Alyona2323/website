@@ -1,0 +1,14 @@
+{#{% extends "base.html" %}#}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% block content %}
+    <div class="row" style="margin-top: -80px;">
+        <h1>{% trans "Реєстрація" %}</h1>
+        <p>{% trans "Будь ласка, зареєструйтесь, використовуючи форму: " %}</p>
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" value={% trans "Зберегти" %}>
+        </form>
+    </div>
+{% endblock %}

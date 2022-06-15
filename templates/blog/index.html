@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+{% load static %}
+{% load i18n %}
+<head>
+    <meta charset="utf-8">
+    <title>{% trans "UA ONLINE" %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static "css/basic.css" %}">
+    <link rel="stylesheet" href="{% static "css/style_search.css" %}">
+    <link rel="stylesheet" href="{% static "css/style_footer.css" %}">
+    <link rel="stylesheet" href="{% static "css/main.css" %}">
+    <link rel="stylesheet" href="{% static "css/up.css" %}">
+    <link rel="stylesheet" href="{% static "js/jquery-3.2.1.min.js" %}">
+    <link rel="stylesheet" href="{% static "js/modernizr.js" %}">
+    <link rel="stylesheet" href="{% static "js/pace.min.js" %}">
+    <link rel="stylesheet" href="{% static "js/plugins.js" %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+</head>
+<body id="top">
+<section class="s-pageheader s-pageheader--home">
+    <header class="header">
+        <div class="header__content row">
+            <div class="header__logo">
+                <a class="logo" href="{% url "index" %}"><img src={% static "logo_ua.PNG" %} alt="UA_online"></a>
+            </div>
+            <ul class="header__social">
+                <li><a href="#">
+                    <ion-icon name="logo-facebook"></ion-icon>
+                </a></li>
+                <li><a href="#">
+                    <ion-icon name="logo-twitter"></ion-icon>
+                </a></li>
+                <li><a href="#">
+                    <ion-icon name="logo-instagram"></ion-icon>
+                </a></li>
+                <li><a href="#">
+                    <ion-icon name="logo-youtube"></ion-icon>
+                </a></li>
+            </ul>
+            <form method="post" action="{% url "search" %}" class="input-group">
+                {% csrf_token %}
+                <input type="search" name="query" class="form-control" placeholder="{% trans "Пошук" %}"/>
+                <span class="input-group-btn">
+      <i class="fa fa-search" aria-hidden="true"></i>
+      </span>
+            </form>
+            <a class="header__toggle-menu" href="#0" title="Menu"><span>Menu</span></a>
+            <nav class="header__nav-wrap">
+
+                <ul class="header__nav" style="font-size: 18px;>
+                   <li class=" current
+                "><a href="{% url 'index' %}">{% trans "ГОЛОВНА СТОРІНКА" %}</a></li>
+                <li class="has-children">
+                    <a href="#0" title="">{% trans "КАТЕГОРІЇ" %}</a>
+                    <ul class="sub-menu">
+                        <li><a href="{% url "gallery" %}">{% trans "Фото in UA" %}</a></li>
+                        {% for c in cat1 %}
+                            <li><a href="{% url "category" id=c.pk %}">{{ c.name }}</a></li>
+                        {% endfor %}
+                        {% for c in cat2 %}
+                            <li><a href="{% url "category" id=c.pk %}">{{ c.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li><a href="{% url 'about' %}" title="">{% trans "ПРО НАС" %}</a></li>
+                <li><a href="https://dimcharity.com/" title="">{% trans "ПІДТРИМАЙ UA" %}</a></li>
+                {% if request.user.is_authenticated %}
+                    &emsp;&emsp; <a>{% trans "Вітаю," %} {{ request.user }}</a>
+                    &emsp;&emsp;
+                    <li><a href="{% url 'logout' %}">{% trans "  Вийти" %}</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">{% trans "УВІЙТИ" %}</a></li>
+                {% endif %}
+
+            </nav>
+        </div>
+    </header>
+    </div>
+    <div class="pageheader-content row">
+        <div class="col-full">
+            <div class="featured">
+                <div class="featured__column featured__column--big">
+                    <div class="entry" style="background-image:url(static/uk_mom.jpg);">
+                        <div class="entry__content">
+                            <span class="entry__category" style="font-size:16px;font-weight: 900;"><a
+                                    href="{% url 'create' %}">{% trans "Запропонувати новину" %}</a></span>
+                            <h1><a href="#0" title="">{% trans "Доброго вечора, ми з України!" %}</a></h1>
+                            <div class="entry__info" style="font-size:23px;color:#FFFFFF;padding: 0">
+                                <ul>{% trans "Останні новини України" %} &#8226; {% trans "новини онлайн" %}</ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="featured__column featured__column--small">
+                    <div class="entry" style="background-image:url(static/1.jpg);">
+                        <div class="entry__content">
+                            <span class="entry__category" style="font-size:12px; background-color: #01aef0;"><a
+                                    href="{% url "upload" %}">{% trans "Завантажити фотографію" %} </a></span>
+                            <h1><a href="#0" title="">{% trans "Поділися своїми враженнями" %}</a></h1>
+                        </div>
+                    </div>
+                    <div class="entry" style="background-image:url(static/prapor.jpg);">
+                        <div class="entry__content">
+                            <span class="entry__category" style="font-size:12px;"><a
+                                    href="{% url "gallery" %}">{% trans "Фото in UA" %}</a></span>
+                            <h1><a href="#0" title="">{% trans "Україна починається з тебе" %}</a></h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="s-content">
+    <div class="row masonry-wrap">
+        <div class="masonry">
+            <div class="grid-sizer"></div>
+            {% for post in posts %}
+                <article class="masonry__brick entry format-standard" data-aos="fade-up">
+                    <div class="entry__thumb">
+                        <a href="{% url "post" post.pk %}" class="entry__thumb-link">
+                            <img src="{{ post.img.url }}" alt="">
+                        </a>
+                    </div>
+                    <div class="entry__text">
+                        <div class="entry__header">
+                            <div class="entry__date">
+                                <img src={% static "clock.png" %} height= 5%; width=5%;
+                                     title="{% trans "Опубліковано" %}">
+                                {{ post.published_date }}
+                            </div>
+                            <h1 class="entry__title"><a href="{% url "post" post.pk %}">{{ post.title }}</a></h1>
+                        </div>
+                        <div class="entry__excerpt">
+                            <p>
+                                {{ post.content|truncatewords:20 }}
+                            </p>
+                        </div>
+                        <div class="entry__meta">
+                            <span class="entry__meta-links">
+                                 <img src={% static "profile.png" %} height= 6%; width=6%;
+                                      title="{% trans "Автор" %}">
+
+{#{% for user in posts %}#}
+                               <a href="{% url "index" %}">{{ post.user }}</a>
+{#     {% endfor %}#}
+                                <br/>
+{#                                {% for c in cat2 %}#}
+                                  <img src={% static "category.png" %} height= 6%; width=6%;
+                                       title="{% trans "Категорія" %}">  <a href="">{{ post.category }}</a>
+{#                                    {% endfor %}#}
+
+
+{##}
+{#                {% for c in cat1 %}#}
+{#                    <a href="{% url "category" id=c.pk %}">{{ c.name }}</a>#}
+{#                {% endfor %}#}
+{#                {% for c in cat2 %}#}
+{#                    <a href="{% url "category" id=c.pk %}">{{ c.name }}</a>#}
+{#                {% endfor %}#}
+                            </span>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+
+
+            <div class="pagination">
+    <span class="step-links">
+        {% if page.has_previous %}
+            <a href="?page={{ page.previous_page_number }}">Previous</a>
+        {% endif %}
+        <span class="current">
+{#            Page {{ page.number }} of {{ page.paginator.num_pages }}.#}
+        </span>
+        {% if page.has_next %}
+            <a href="?page={{ page.next_page_number }}">Next</a>
+        {% endif %}
+    </span>
+            </div>
+
+
+            {#                            <li><a class="pgn__prev" href="?page={{ pages.previous_page_number }}">&larr; {% trans "Попередня" %}</a></li>#}
+            {#                                                    <li><a class="pgn__num" href="#0">1</a></li>#}
+            {#                                                    <li><span class="pgn__num current">2</span></li>#}
+            {#                                                    <li><a class="pgn__num" href="#0">3</a></li>#}
+            {#                                                    <li><a class="pgn__num" href="#0">4</a></li>#}
+            {#                                                    <li><a class="pgn__num" href="#0">5</a></li>#}
+            {#                                                    <li><span class="pgn__num dots">…</span></li>#}
+            {#                                                   <li><a class="pgn__num" href="#0">8</a></li>#}
+            {#                            <li><a href="?page={{ pages.page_next_number }}">{% trans "Наступна" %} &rarr;</a></li>#}
+            {#                        </ul>#}
+            {#                    </nav>#}
+            {#                </div>#}
+            {#            </div>#}
+
+
+            {#        <div class="pagination">#}
+            {#                  <span class="page-links">#}
+            {#                      {% if page_obj.has_previous %}#}
+            {#                          <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">&lt;&lt;</a>#}
+            {#                      {% endif %}#}
+            {#                      <span class="page-current">#}
+            {#                          Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}#}
+            {#                      </span>#}
+            {#                      {% if page_obj.has_next %}#}
+            {#                          <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">&gt;&gt;</a>#}
+            {#                      {% endif %}#}
+            {#                  </span>#}
+            {#        </div>#}
+
+
+            {#        <div class="row">#}
+            {#            <div class="col-full">#}
+            {#                <nav class="pgn">#}
+            {#                    <ul>#}
+            {#                        <li><a class="pgn__prev" href="#0">Prev</a></li>#}
+            {#                        <li><a class="pgn__num" href="#0">1</a></li>#}
+            {#                        <li><span class="pgn__num current">2</span></li>#}
+            {#                        <li><a class="pgn__num" href="#0">3</a></li>#}
+            {#                        <li><a class="pgn__num" href="#0">4</a></li>#}
+            {#                        <li><a class="pgn__num" href="#0">5</a></li>#}
+            {#                        <li><span class="pgn__num dots">…</span></li>#}
+            {#                        <li><a class="pgn__num" href="#0">8</a></li>#}
+            {#                        <li><a class="pgn__next" href="#0">Next</a></li>#}
+            {#                    </ul>#}
+            {#                </nav>#}
+            {#            </div>#}
+            {#        </div>#}
+
+</section>
+
+
+<section class="s-extra">
+    <div class="row top">
+        <div class="col-eight md-six tab-full popular">
+            <h3>{% trans 'Дошка оголошень' %}</h3>
+
+            <div class="block-1-2 block-m-full popular__posts">
+                <article class="col-block popular__post">
+                    <a href="#0" class="popular__thumb">
+                        <img src="images/thumbs/small/wheel-150.jpg" alt="">
+                    </a>
+                    <h5>{% trans "Доля безпритульних котиків та песиків у твоїх руках." %}</h5>
+                    <section class="popular__meta">
+                        <span class="popular__author"> <a
+                                href="https://happypaw.ua/ua/">{% trans "ДОПОМОГТИ " %}</a></span>
+                    </section>
+                </article>
+                <article class="col-block popular__post">
+                    <a href="#0" class="popular__thumb">
+                        <img src={% static "logo_ua.PNG" %} alt="">
+                    </a>
+                    <h5><a href="#0">текст</a></h5>
+                    <section class="popular__meta">
+                        <span class="popular__author"> <a href="#0"> 1111111</a></span>
+                    </section>
+                </article>
+                <article class="col-block popular__post">
+                    <a href="#0" class="popular__thumb">
+                        <img src="images/thumbs/small/cookies-150.jpg" alt="">
+                    </a>
+                    <h5>текст 3</h5>
+                    <section class="popular__meta">
+                        <span class="popular__author"><a href="#0"> 3333333</a></span>
+
+                    </section>
+                </article>
+                <article class="col-block popular__post">
+                    <a href="#0" class="popular__thumb">
+                        <img src="images/thumbs/small/beetle-150.jpg" alt="">
+                    </a>
+                    <h5>текст 4</h5>
+                    <section class="popular__meta">
+                        <span class="popular__author"><a href="#0"> 4444444</a></span>
+
+                    </section>
+                </article>
+                <article class="col-block popular__post">
+                    <a href="#0" class="popular__thumb">
+                        <img src="images/thumbs/small/tulips-150.jpg" alt="">
+                    </a>
+                    <h5>текст 5</h5>
+                    <section class="popular__meta">
+                        <span class="popular__author"><a href="#0"> 555555</a></span>
+
+                    </section>
+                </article>
+                <article class="col-block popular__post">
+                    <a href="#0" class="popular__thumb">
+                        <img src="images/thumbs/small/salad-150.jpg" alt="">
+                    </a>
+                    <h5>текст 6</h5>
+                    <section class="popular__meta">
+                        <span class="popular__author"><a href="#0"> 66666</a></span>
+
+                    </section>
+                </article>
+            </div> <!-- end popular_posts -->
+        </div> <!-- end popular -->
+
+
+        <div class="col-four md-six tab-full about">
+            <h3>{% trans 'Про Україну' %}</h3>
+            <p>
+                {% trans 'Україна – найбільша країна в Європі. Країна з багатою та різноманітною культурою, батьківщина всесвітньо відомих митців та літераторів.' %}
+            </p>
+            <p>
+                {% trans 'Україна – це держава зі славним і, водночас, трагічним минулим. Люди різних національностей долучилися до творення її історії. Також Україну формують спадщини різних держав, до яких вона колись входила, перш за все Австро-Угорщини, Російської імперії та Радянського Союзу.' %}
+            </p>
+            <p><a href="https://studyinukraine.gov.ua/chomu-ukraina/pro-ukrainu/"
+                  title="">{% trans "Докладніше..." %}</a></p>
+        </div>
+    </div>
+    <div class="row bottom tags-wrap">
+        <div class="col-full tags">
+            <h3>{% trans "Категорії" %}</h3>
+            <div class="tagcloud">
+                <a href="{% url "gallery" %}">{% trans "Фото in UA" %}</a>
+                {% for c in cat1 %}
+                    <a href="{% url "category" id=c.pk %}">{{ c.name }}</a>
+                {% endfor %}
+                {% for c in cat2 %}
+                    <a href="{% url "category" id=c.pk %}">{{ c.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+<div class="akeconsa-udaneles">
+    <a href="#" title={% trans "Вверх" %}><span class="fas fa-angle-up"></span></a>
+</div>
+<footer style="padding-top: 0; padding-bottom: 0;   ">
+    <ul class="social">
+        <li><a href="#">
+            <ion-icon name="logo-facebook"></ion-icon>
+        </a></li>
+        <li><a href="#">
+            <ion-icon name="logo-twitter"></ion-icon>
+        </a></li>
+        <li><a href="#">
+            <ion-icon name="logo-instagram"></ion-icon>
+        </a></li>
+        <li><a href="#">
+            <ion-icon name="logo-youtube"></ion-icon>
+        </a></li>
+    </ul>
+    <ul class="menu" style="font-size: 18px;">
+        <li><a href="{% url 'index' %}">{% trans "Головна сторінка" %}</a></li>
+        <li><a href="{% url 'about' %}">{% trans "Про нас" %}</a></li>
+        <li><a href="https://dimcharity.com/">{% trans "Підтримай UA" %}</a></li>
+    </ul>
+    <p>&copy; 2022 {% trans "А" %}</p>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</footer>
+</body>
+</html>
+

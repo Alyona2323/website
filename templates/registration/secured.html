@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+    <div class="row" style="margin-top: -80px;">
+        <h1>{% trans "Вітаю, " %} {{ request.user }}</h1>
+    </div>
+{% endblock %}

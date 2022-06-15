@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+    <div class="row">
+        <div class="s-content__header col-full">
+            <h1 class="s-content__header-title">
+                {% trans "Про нас" %}
+            </h1>
+        </div>
+        <p class="lead">{% trans "Мультимедійний онлайн ресурс, який протягом дня дає максимально оперативну інформацію з усіх найважливіших подій країни. «UA ONLINE» - це екосистема інформації, розваг та саморозвитку. Ми повідомляємо новини, аналізуємо та пояснюємо, що вони означають, розважаємо та прокачуємо скіли наших читачів, надаючи можливості для саморозвитку." %}
+        </p>
+        <p class="lead">{% trans 'Наша мета: надавати якісну інформацію у зручному для Вас місці та форматі. Вам не треба шукати актуальні та правдиві новини по всьому інтернету –  «UA ONLINE» зустрічає читача щоранку дорогою на роботу, у кафе та бізнес-центрах. Протягом усього дня на наших сторінках у соцмережах, а також на сайті «UA ONLINE» Ви отримуєте найважливіші новини країни.' %}</p>
+        <div class="row block-1-2 block-tab-full">
+            <div class="col-block">
+                <h3 class="quarter-top-margin">{% trans "Контакти" %}</h3>
+                <h4>{% trans "Тел.:" %} +38 (066) 000 00 00</h4>
+                <h4 style="margin-top: -10px;">{% trans "E-mail:" %} alenasidoruk09@gmail.com</h4>
+            </div>
+            <div class="col-block">
+                <h3 class="quarter-top-margin">{% trans "Рекламна служба" %}</h3>
+                <h4>{% trans "Тел.:" %} +38 (067) 000 00 00</h4>
+                <h4 style="margin-top: -10px;">{% trans "E-mail:" %} ua_online@gmail.com</h4>
+            </div>
+            <div class="col-block">
+                <h3 class="quarter-top-margin">{% trans "Адреса" %}</h3>
+                <h4>{% trans "Україна, 49000, м. Дніпро" %}</h4>
+            </div>
+        </div>
+    </div>
+    <div class="akeconsa-udaneles">
+        <a href="#" title={% trans "Вверх" %}><span class="fas fa-angle-up"></span></a>
+    </div>
+{% endblock %}
+

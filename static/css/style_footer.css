@@ -1,0 +1,52 @@
+
+ footer {
+            display: flex;
+            justify-content: center; /*в центре по горизонтали*/
+            align-items: center; /*в центре по вертикали*/
+            flex-direction: column;
+
+        }
+
+
+        .social,
+        .menu {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 8px 0;
+            flex-wrap: wrap; /*разрешен перенос на новую строку*/
+        }
+
+        .social li,
+        .menu li {
+            list-style: none; /*удалить черные маркеры*/
+        }
+
+        .social li a {
+            font-size: 2em; /*размер иконок*/
+            color: #fff; /*цвет иконок*/
+            margin: 0 10px;
+            display: inline-block; /*отображать как строчно-блочный элемент*/
+            transition: 0.5s; /*плавный переход*/
+        }
+
+        .menu li a {
+
+            color: #fff; /*цвет ссылок меню*/
+            opacity: 0.75; /*значение прозрачности*/
+            margin: 0 15px;
+            text-decoration: none; /*ссылка без подчеркивания*/
+            display: inline-block;
+        }
+
+        .menu li a:hover {
+            opacity: 1;
+        }
+
+        footer p {
+            color: #fff;
+            text-align: center;
+            margin-top: 15px;
+        }
+

@@ -1,0 +1,18 @@
+{#{% extends "base.html" %}#}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% block content %}
+    <div class="row" style="margin-top: -80px;">
+        <form method="post">
+            <h3>{% trans "Вхід до особистого кабінету" %}</h3>
+            <table>
+                {{ form|crispy }}
+            </table>
+            {% csrf_token %}
+            <input type="submit" value={% trans "Увійти" %}>
+            <h3>{% trans "Ви ще не зареєстровані?" %} <a href="{% url 'register' %}">{% trans "Зареєструватися" %}</a>
+            </h3>
+        </form>
+    </div>
+{% endblock %}
+

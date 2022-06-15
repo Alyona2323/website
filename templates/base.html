@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+{% load static %}
+{% load i18n %}
+<head>
+    <meta charset="utf-8">
+    <title>{% trans "UA ОНЛАЙН" %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static "css/basic.css" %}">
+    <link rel="stylesheet" href="{% static "css/style_search.css" %}">
+    <link rel="stylesheet" href="{% static "css/style_footer.css" %}">
+    <link rel="stylesheet" href="{% static "css/main.css" %}">
+    <link rel="stylesheet" href="{% static "css/up.css" %}">
+    <link rel="stylesheet" href="{% static "js/jquery-3.2.1.min.js" %}">
+    <link rel="stylesheet" href="{% static "js/modernizr.js" %}">
+    <link rel="stylesheet" href="{% static "js/pace.min.js" %}">
+    <link rel="stylesheet" href="{% static "js/plugins.js" %}">
+    <link rel="stylesheet" href="{% static "css/gallery.css" %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+</head>
+<body id="top">
+<div class="s-pageheader">
+    <header class="header">
+        <div class="header__content row">
+            <div class="header__logo">
+                <a class="logo" href="{% url "index" %}"><img src={% static "logo_ua.PNG" %} alt="UA online"></a>
+            </div>
+            <ul class="header__social">
+                <li><a href="#">
+            <ion-icon name="logo-facebook"></ion-icon>
+        </a></li>
+        <li><a href="#">
+            <ion-icon name="logo-twitter"></ion-icon>
+        </a></li>
+        <li><a href="#">
+            <ion-icon name="logo-instagram"></ion-icon>
+        </a></li>
+        <li><a href="#">
+            <ion-icon name="logo-youtube"></ion-icon>
+        </a></li>
+            </ul>
+            <form method="post" action="{% url "search" %}" class="input-group">
+                {% csrf_token %}
+                <input type="search" name="query" class="form-control" placeholder="{% trans "Пошук" %}"/>
+                <span class="input-group-btn">
+      <i class="fa fa-search" aria-hidden="true"></i>
+      </span>
+            </form>
+            <a class="header__toggle-menu" href="#0" title="Menu"><span>Menu</span></a>
+            <nav class="header__nav-wrap">
+                <h2 class="header__nav-heading h6">Site Navigation</h2>
+                <ul class="header__nav" style="font-size: 18px;>
+                        <li class=" current
+                "><a href="{% url 'index' %}">{% trans "ГОЛОВНА СТОРІНКА" %}</a></li>
+                <li class="has-children">
+                    <a href="#0" title="">{% trans "КАТЕГОРІЇ" %}</a>
+                    <ul class="sub-menu">
+                        <li><a href="{% url "gallery" %}">{% trans "Фото in UA" %}</a></li>
+                        {% for c in cat1 %}
+                            <li><a href="{% url "category" id=c.pk %}">{{ c.name }}</a></li>
+                        {% endfor %}
+                        {% for c in cat2 %}
+                            <li><a href="{% url "category" id=c.pk %}">{{ c.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li><a href="{% url 'about' %}" title="">{% trans "ПРО НАС" %}</a></li>
+                <li><a href="https://dimcharity.com/" title="">{% trans "ПІДТРИМАЙ UA" %}</a></li>
+                {% if request.user.is_authenticated %}
+                    &emsp;&emsp; <a>{% trans "Вітаю," %} {{ request.user }}</a>
+                    &emsp;&emsp;
+                    <li><a href="{% url 'logout' %}">{% trans "  Вийти" %}</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">{% trans "УВІЙТИ" %}</a></li>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+</div>
+<section class="s-content">
+    {% block content %}{% endblock %}
+</section>
+<footer style="padding-top: 0; padding-bottom: 0; ">
+    <ul class="social">
+        <li><a href="#">
+            <ion-icon name="logo-facebook"></ion-icon>
+        </a></li>
+        <li><a href="#">
+            <ion-icon name="logo-twitter"></ion-icon>
+        </a></li>
+        <li><a href="#">
+            <ion-icon name="logo-instagram"></ion-icon>
+        </a></li>
+        <li><a href="#">
+            <ion-icon name="logo-youtube"></ion-icon>
+        </a></li>
+    </ul>
+    <ul class="menu" style="font-size: 18px;">
+        <li><a href="{% url 'index' %}">{% trans "Головна сторінка" %}</a></li>
+        <li><a href="{% url 'about' %}">{% trans "Про нас" %}</a></li>
+        <li><a href="https://dimcharity.com/">{% trans "Підтримай UA" %}</a></li>
+    </ul>
+    <p>&copy; 2022 {% trans "А" %}</p>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</footer>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

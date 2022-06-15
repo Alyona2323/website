@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+    <div class="row" style="margin-top: -80px;">
+        <h1>{% trans "Ласкаво просимо," %} {{ new_user }}!</h1>
+        <p>{% trans "Ваш обліковий запис успішно створено. Тепер Ви можете " %}<a
+                href="{% url "login" %}">{% trans "авторизуватися" %}</a>.</p>
+    </div>
+{% endblock %}
