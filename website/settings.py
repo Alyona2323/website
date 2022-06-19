@@ -5,9 +5,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-m_fmk+udcn$(dr=16ec3#-ow$68*5@7+2^_40jm@im@fxw*^b8'
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -57,8 +57,23 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+
+
+        'HOST': 'localhost',
+        'PORT': ''
     }
 }
+
+# DATABASES = {
+#     'default' : {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'djangodb',
+#         'USER': 'dbuser',
+#         'PASSWORD': 'django',
+#         'HOST': 'localhost',
+#         'PORT': ''
+#     }
+# }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -86,6 +101,8 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = '/var/www/html/static'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
