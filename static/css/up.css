@@ -1,24 +1,26 @@
-html{
-  scroll-behavior: smooth;
+html {
+    scroll-behavior: smooth;
 }
 
-.akeconsa-udaneles{
-  position: fixed;
-  bottom: 28px;
-  right: 28px;
-  z-index: 9;
+.akeconsa-udaneles {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 9;
 }
+
 .akeconsa-udaneles a {
-  height: 42px;
-  width: 42px;
-  text-align: center;
-  background: #151414;
-  display: block;
-  border-radius: 2px;
+    height: 42px;
+    width: 42px;
+    text-align: center;
+    background: #151414;
+    display: block;
+    border-radius: 2px;
 }
+
 .akeconsa-udaneles a span {
-  color: #f7f0f0;
-  font-size: 30px;
-  line-height: 42px;
-  cursor: pointer;
+    color: #f7f0f0;
+    font-size: 30px;
+    line-height: 42px;
+    cursor: pointer;
 }

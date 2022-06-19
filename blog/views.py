@@ -1,5 +1,4 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
 from django.http.response import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_POST
@@ -112,25 +111,6 @@ def search(request):
     return render(request, "blog/result_search.html", context)
 
 
-# class CreatePostView(LoginRequiredMixin, CreateView):
-#     model = Post
-#     template_name = "blog/create.html"
-#     login_url = reverse_lazy('login')
-#     fields = ('title', 'content', 'category', 'img',)
-#     success_url = reverse_lazy('index')
-#
-#     def post(self, request, *args, **kwargs):
-#         form = PostForm(request.POST, files=request.FILES)
-#         author = User.objects.get(user=request.user)
-#         form.instance.user = author
-#         if form.is_valid():
-#             form.save()
-#             return redirect("index")
-#         else:
-#             context = {'form': form}
-#             return render(request, self.template_name, context)
-
-
 class CreatePostView(LoginRequiredMixin, CreateView):
     model = Post
     template_name = "blog/create.html"
@@ -155,29 +135,12 @@ class CreatePostView(LoginRequiredMixin, CreateView):
         return render(request, "blog/create.html", context)
 
 
-# @login_required
-# def create(request):
-#     # if request.method == 'POST':
-#     #     form = PostForm(request.POST, request.FILES)
-#     #     if form.is_valid():
-#     #         p = form.save(commit=False)
-#     #         p.published_date = now()
-#     #         p.user = request.user
-#     #         p.save()
-#     #         return redirect("index")
-#     #     else:
-#     #         return render(request, "blog/create.html", {"form": form})
-#     form = PostForm()
-#     context = {"form": form}
-#     context.update(get_categories())
-#     return render(request, "blog/create.html", context)
-
-
 @login_required
 @require_POST
 def like(request, id):
     if request.method == 'POST':
         user = request.user
+
         post = get_object_or_404(Post, pk=id)
         if post.likes.filter(id=user.id).exists():
             post.likes.remove(user)
