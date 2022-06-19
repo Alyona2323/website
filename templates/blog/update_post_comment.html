@@ -1,21 +1,19 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-    <div class="row">
-        <form action="{% url "upload" %}" method="post" enctype="multipart/form-data">
+    <div class="row" style="margin-top: -80px;">
+        <form role="form" method="post" style="margin-top: 20px; ">
             {% csrf_token %}
+            <h3>{{ title }} {{ post.title }}</h3>
             {{ form }}
             <button type="submit" style="width: 50%; display: inline-block; box-sizing: border-box; margin-top: 20px;"
-                    class="btn btn-default">{% trans "Завантажити" %}</button>
+                    class="btn btn-primary">{% trans "Редагувати коментар" %}</button>
         </form>
     </div>
     <br>
-    <br>
-    <br>
-
 
     <style>
-        input[type=text], input[type=submit], input[type="file" i] {
+        textarea {
             width: 50%;
             padding: 12px 20px;
             margin: 8px 0;
@@ -26,3 +24,4 @@
     </style>
 
 {% endblock %}
+

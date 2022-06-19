@@ -1,6 +1,6 @@
 from django.urls import path
 from blog import views
-from .views import register_user, login_view, logout_view, PostComment, DeletePostView, UpdatePostView, CommentUpdateView, DeleteCommentView
+from .views import register_user, CreatePostView, login_view, logout_view, PostComment, DeletePostView, UpdatePostView, CommentUpdateView, DeleteCommentView
 
 urlpatterns = [
     path('ua_online', views.index, name="index"),
@@ -10,7 +10,7 @@ urlpatterns = [
     path('ua_online/post/<int:id>/', views.post, name="post"),
     path('ua_online/category/<int:id>/', views.category, name="category"),
     path('ua_online/search/', views.search, name="search"),
-    path('ua_online/create/', views.create, name="create"),
+    path('ua_online/create/', CreatePostView.as_view(), name="create"),
     path('ua_online/register/', register_user, name='register'),
     path('ua_online/comment/<int:id>/', PostComment.as_view(), name='comment'),
     path('like/<int:id>/', views.like, name='like'),

@@ -23,13 +23,15 @@ class LoginForm(forms.Form):
 
 
 class UserRegistrationForm(forms.ModelForm):
+    username = forms.CharField(label=_('Імя користувача (не більше 150 символів. Тільки букви, цифри та символи @/./+/-/_.'))
     password = forms.CharField(widget=forms.PasswordInput,
-                               label=_('Пароль (мінімальна допустима кількість символів: 5)'))
+                               label=_('Пароль (мінімальна допустима кількість символів - 5)'))
     password2 = forms.CharField(widget=forms.PasswordInput, label=_('Введіть пароль повторно'))
+    email = forms.EmailField(widget=forms.EmailInput, label=_('Введіть електронну пошту'))
 
     class Meta:
         model = User
-        fields = ('username', 'email')
+        fields = ('username', 'email', )
 
     def clean_password2(self):
         cd = self.cleaned_data

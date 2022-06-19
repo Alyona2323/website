@@ -1,7 +1,6 @@
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.http.response import HttpResponse, JsonResponse
+from django.contrib.auth.models import User
+from django.http.response import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_POST
 from django.views.generic.base import TemplateView
@@ -13,13 +12,41 @@ from django.utils.timezone import now
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin, UserPassesTestMixin
-from django.db.models import Count
+
+
+def get_categories():
+    all_categories = Category.objects.all()
+    return {'cat': all_categories}
+
+
+def category(request, id=None):
+    posts = Post.objects.filter(category__pk=id).order_by("-published_date")
+    context = {"posts": posts}
+    context.update(get_categories())
+    return render(request, "blog/category.html", context)
+
+
+def register_user(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            new_user = form.save(commit=False)
+            new_user.set_password(form.cleaned_data['password'])
+            new_user.save()
+            return render(request, 'registration/register_done.html', {'new_user': new_user})
+    else:
+        form = UserRegistrationForm()
+        context = {'form': form}
+        context.update(get_categories())
+    return render(request, 'registration/register.html', context)
 
 
 def login_view(request):
     form = LoginForm()
+    context = {'form': form}
+    context.update(get_categories())
     if request.method == 'GET':
-        return render(request, 'registration/login.html', {'form': form})
+        return render(request, 'registration/login.html', context)
     elif request.method == 'POST':
         try:
             user = authenticate(username=request.POST.get('login'),
@@ -38,47 +65,12 @@ def logout_view(request):
     return redirect("index")
 
 
-def post(request, id=None):
-    p = get_object_or_404(Post, pk=id)
-    context = {"post": p}
-    context.update(get_categories())
-    return render(request, "blog/post.html", context)
+class OnlyForAuthenticatedUsersView(PermissionRequiredMixin, TemplateView):
+    permission_required = 'blog.post_confirm_delete'
+    template_name = 'registration/secured.html'
+    login_url = reverse_lazy('login')
+    extra_context = {'title': 'Тільки для авторизованих користувачів!'}
 
-# def get_categories():
-#     all_categories = Category.objects.all()
-#     count = all_categories.count()
-#     half = count // 2 + count % 2
-#     first_half = all_categories[:half]
-#     second_half = all_categories[half:]
-#     return {"cat1": first_half, "cat2": second_half}
-
-def get_categories():
-    all_categories = Category.objects.all()
-    count = all_categories.count()
-    part = count // 6 + count % 6
-    part_1 = all_categories[part:]
-    part_2 = all_categories[:part:]
-    part_3 = all_categories[:part:]
-    part_4 = all_categories[:part:]
-    part_5 = all_categories[:part:]
-    part_6 = all_categories[:part]
-    return {"cat1": part_1, "cat2": part_2, "cat3": part_3, "cat4": part_4, "cat5": part_5, "cat6": part_6}
-
-
-# def index(request):
-#     all_posts = Post.objects.all().order_by("-published_date")
-#     paginator = Paginator(all_posts, 6)
-#     page = request.GET.get('page')
-#     try:
-#         posts = paginator.page(page)
-#     except PageNotAnInteger:
-#         posts = paginator.page(1)
-#     except EmptyPage:
-#         posts = paginator.page(paginator.num_pages)
-#
-#     context = {"posts": posts}
-#     context.update(get_categories())
-#     return render(request, "blog/index.html", context)
 
 def index(request):
     all_posts = Post.objects.all().order_by("-published_date")
@@ -90,62 +82,95 @@ def index(request):
         posts = paginator.page(1)
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
-    context = {'posts': posts}
+    context = {'posts': posts, 'page': page}
     context.update(get_categories())
     return render(request, "blog/index.html", context)
 
-# def post2(request):
-#     context = {
-#         'user': Post.objects.filter(user=request.user)
-#     }
-#
-#     return render(request, 'index.html', context)
+
+def post(request, id=None):
+    p = get_object_or_404(Post, pk=id)
+    context = {"post": p}
+    context.update(get_categories())
+    return render(request, "blog/post.html", context)
+
 
 def about(request):
-    return render(request, 'blog/about.html')
-
-
-def category(request, id=None):
-    posts = Post.objects.filter(category__pk=id).order_by("-published_date")
-    context = {"posts": posts}
+    p = 'blog/about.html'
+    context = {"post": p}
     context.update(get_categories())
-    return render(request, "blog/index.html", context)
+    return render(request, 'blog/about.html', context)
 
 
 def search(request):
-    print(request.method)
-    print(request.POST)
-
     if request.method == 'POST':
         query = request.POST['query']
         posts = Post.objects.filter(content__icontains=query).order_by("-published_date")
     else:
         posts = []
-
     context = {"posts": posts}
     context.update(get_categories())
-    return render(request, "blog/index.html", context)
+    return render(request, "blog/result_search.html", context)
 
 
+# class CreatePostView(LoginRequiredMixin, CreateView):
+#     model = Post
+#     template_name = "blog/create.html"
+#     login_url = reverse_lazy('login')
+#     fields = ('title', 'content', 'category', 'img',)
+#     success_url = reverse_lazy('index')
+#
+#     def post(self, request, *args, **kwargs):
+#         form = PostForm(request.POST, files=request.FILES)
+#         author = User.objects.get(user=request.user)
+#         form.instance.user = author
+#         if form.is_valid():
+#             form.save()
+#             return redirect("index")
+#         else:
+#             context = {'form': form}
+#             return render(request, self.template_name, context)
 
 
-@login_required
-def create(request):
-    if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
+class CreatePostView(LoginRequiredMixin, CreateView):
+    model = Post
+    template_name = "blog/create.html"
+    login_url = reverse_lazy('login')
+    fields = ('title', 'content', 'category', 'img',)
+    success_url = reverse_lazy('index')
 
-        print(form)
-        if form.is_valid():
-            p = form.save(commit=False)
-            p.published_date = now()
-            p.user = request.user
-            p.save()
-            print("saved", p)
-            return redirect("index")
-        else:
-            return render(request, "blog/create.html", {"form": form})
-    form = PostForm()
-    return render(request, "blog/create.html", {"form": form})
+    def post(self, request, *args, **kwargs):
+        if request.method == 'POST':
+            form = PostForm(request.POST, request.FILES)
+            if form.is_valid():
+                p = form.save(commit=False)
+                p.published_date = now()
+                p.user = request.user
+                p.save()
+                return redirect("index")
+            else:
+                return render(request, "blog/create.html", {"form": form})
+        form = PostForm()
+        context = {"form": form}
+        context.update(get_categories())
+        return render(request, "blog/create.html", context)
+
+
+# @login_required
+# def create(request):
+#     # if request.method == 'POST':
+#     #     form = PostForm(request.POST, request.FILES)
+#     #     if form.is_valid():
+#     #         p = form.save(commit=False)
+#     #         p.published_date = now()
+#     #         p.user = request.user
+#     #         p.save()
+#     #         return redirect("index")
+#     #     else:
+#     #         return render(request, "blog/create.html", {"form": form})
+#     form = PostForm()
+#     context = {"form": form}
+#     context.update(get_categories())
+#     return render(request, "blog/create.html", context)
 
 
 @login_required
@@ -164,49 +189,9 @@ def like(request, id):
     return JsonResponse(context)
 
 
-class OnlyForAuthenticatedUsersView(PermissionRequiredMixin, TemplateView):
-    permission_required = 'blog.post_confirm_delete'
-    template_name = 'registration/secured.html'
-    login_url = reverse_lazy('login')
-    extra_context = {'title': 'Тільки для авторизованих користувачів!'}
-
-
-def register_user(request):
-    if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
-        if form.is_valid():
-            new_user = form.save(commit=False)
-            new_user.set_password(form.cleaned_data['password'])
-            new_user.save()
-            return render(request, 'registration/register_done.html', {'new_user': new_user})
-    else:
-        form = UserRegistrationForm()
-    return render(request, 'registration/register.html', {'form': form})
-
-
-class PostComment(LoginRequiredMixin, CreateView):
-    form = CommentForm
-    model = Comment
-    login_url = reverse_lazy('login')
-    template_name = "blog/post_comment.html"
-    extra_context = {'title': 'Коментар до новини'}
-    fields = {'text', }
-    success_url = reverse_lazy('index')
-
-    def post(self, request, id, *args, **kwargs):
-        comment = Comment(text=request.POST.get('text'))
-        post = Post.objects.get(pk=id)
-        comment.post = post
-        comment.user = request.user
-        comment.save()
-        return redirect("index")
-
-
-
-
 class UpdatePostView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
     model = Post
-    template_name = "blog/create.html"
+    template_name = "blog/update.html"
     login_url = reverse_lazy('login')
     extra_context = {'title': 'Редагувати пост'}
     fields = ('title', 'content', 'category', 'img',)
@@ -231,27 +216,30 @@ class DeletePostView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
         return False
 
 
-# class UpdateCommentView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
-#     model = Comment
-#     template_name = "blog/post_comment.html"
-#     login_url = reverse_lazy('login')
-#     extra_context = {'title': 'Редагувати коментар'}
-#     fields = '__all__'
-#     success_url = reverse_lazy('index')
-#
-#     def test_func(self):
-#         comment = self.get_object()
-#         if self.request.user == comment.user:
-#             return True
-#         return False
-
-
-class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):  # Редактирование комментария
+class PostComment(LoginRequiredMixin, CreateView):
+    form = CommentForm
     model = Comment
-    fields = ('title', 'text')
-    template_name = 'post_comment.html'
+    login_url = reverse_lazy('login')
+    template_name = "blog/post_comment.html"
+    extra_context = {'title': 'Коментар до новини'}
+    fields = {'text', }
     success_url = reverse_lazy('index')
-    extra_context = {'title': 'Comment edit'}
+
+    def post(self, request, id, *args, **kwargs):
+        comment = Comment(text=request.POST.get('text'))
+        post = Post.objects.get(pk=id)
+        comment.post = post
+        comment.user = request.user
+        comment.save()
+        return redirect("index")
+
+
+class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Comment
+    fields = ('text',)
+    template_name = 'blog/update_post_comment.html'
+    success_url = reverse_lazy('index')
+    extra_context = {'title': 'Редагування коментаря'}
     login_url = reverse_lazy('login')
 
     def test_func(self):
@@ -265,11 +253,11 @@ class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):  #
         return False
 
 
-class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):  # Удаление комментария
+class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Comment
-    template_name = 'post_comment.html'
+    template_name = 'blog/comment_confirm_delete.html'
     success_url = reverse_lazy('index')
-    extra_context = {'title': 'Comment delete'}
+    extra_context = {'title': 'Видалення коментаря'}
     login_url = reverse_lazy('login')
 
     def test_func(self):

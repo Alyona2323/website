@@ -16,7 +16,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'crispy_forms',
+    # 'crispy_forms',
     'blog',
     'gallery',
     'easy_thumbnails',
@@ -92,6 +92,9 @@ STATICFILES_DIRS = [
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+
+
 
 LOGIN_REDIRECT_URL = "index"
 LOGIN_URL = "blog_login"

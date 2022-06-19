@@ -2,10 +2,10 @@
 {% load i18n %}
 {% block content %}
     <div class="row" style="margin-top: -80px;">
-        <h2>{{ title }}</h2>
+        <h3>{{ title }}</h3>
         <form action="" method="POST">
             {% csrf_token %}
-            <h4>{% trans "Ви впевнені, що хочете вилучити новину під назвою " %} "{{ post.title }}"?</h4>
+            <h4>{% trans "Ви впевнені, що хочете вилучити свій коментар" %}?</h4>
             <h4><input type="submit" value={% trans "Вилучити" %}></h4>
         </form>
     </div>
@@ -14,8 +14,4 @@
     <br>
     <br>
     <br>
-    <br>
-    <br>
-    <br>
-
 {% endblock %}

@@ -25,56 +25,54 @@
     <header class="header">
         <div class="header__content row">
             <div class="header__logo">
-                <a class="logo" href="{% url "index" %}"><img src={% static "logo_ua.PNG" %} alt="UA online"></a>
+                <a class="logo" href="{% url "index" %}"><img src={% static "logo_ua.PNG" %} alt="UA_online"></a>
             </div>
             <ul class="header__social">
                 <li><a href="#">
-            <ion-icon name="logo-facebook"></ion-icon>
-        </a></li>
-        <li><a href="#">
-            <ion-icon name="logo-twitter"></ion-icon>
-        </a></li>
-        <li><a href="#">
-            <ion-icon name="logo-instagram"></ion-icon>
-        </a></li>
-        <li><a href="#">
-            <ion-icon name="logo-youtube"></ion-icon>
-        </a></li>
+                    <ion-icon name="logo-facebook"></ion-icon>
+                </a></li>
+                <li><a href="#">
+                    <ion-icon name="logo-twitter"></ion-icon>
+                </a></li>
+                <li><a href="#">
+                    <ion-icon name="logo-instagram"></ion-icon>
+                </a></li>
+                <li><a href="#">
+                    <ion-icon name="logo-youtube"></ion-icon>
+                </a></li>
             </ul>
             <form method="post" action="{% url "search" %}" class="input-group">
                 {% csrf_token %}
-                <input type="search" name="query" class="form-control" placeholder="{% trans "Пошук" %}"/>
-                <span class="input-group-btn">
-      <i class="fa fa-search" aria-hidden="true"></i>
+                <input type="search" name="query" class="form-control"/>
+                <span class="input-group-btn" style="transform: translate(10px, -100px);"
+                      onclick="search_form.submit()">
+                   <i class="fa fa-search" aria-hidden="true"></i>
       </span>
             </form>
             <a class="header__toggle-menu" href="#0" title="Menu"><span>Menu</span></a>
             <nav class="header__nav-wrap">
                 <h2 class="header__nav-heading h6">Site Navigation</h2>
-                <ul class="header__nav" style="font-size: 18px;>
-                        <li class=" current
-                "><a href="{% url 'index' %}">{% trans "ГОЛОВНА СТОРІНКА" %}</a></li>
-                <li class="has-children">
-                    <a href="#0" title="">{% trans "КАТЕГОРІЇ" %}</a>
-                    <ul class="sub-menu">
-                        <li><a href="{% url "gallery" %}">{% trans "Фото in UA" %}</a></li>
-                        {% for c in cat1 %}
-                            <li><a href="{% url "category" id=c.pk %}">{{ c.name }}</a></li>
-                        {% endfor %}
-                        {% for c in cat2 %}
-                            <li><a href="{% url "category" id=c.pk %}">{{ c.name }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </li>
-                <li><a href="{% url 'about' %}" title="">{% trans "ПРО НАС" %}</a></li>
-                <li><a href="https://dimcharity.com/" title="">{% trans "ПІДТРИМАЙ UA" %}</a></li>
-                {% if request.user.is_authenticated %}
-                    &emsp;&emsp; <a>{% trans "Вітаю," %} {{ request.user }}</a>
-                    &emsp;&emsp;
-                    <li><a href="{% url 'logout' %}">{% trans "  Вийти" %}</a></li>
-                {% else %}
-                    <li><a href="{% url 'login' %}">{% trans "УВІЙТИ" %}</a></li>
-                {% endif %}
+                <ul class="header__nav" style="font-size: 18px;">
+                    <li class=" current"><a href="{% url 'index' %}">{% trans "ГОЛОВНА СТОРІНКА" %}</a></li>
+                    <li class="has-children">
+                        <a href="#0" title="">{% trans "КАТЕГОРІЇ" %}</a>
+                        <ul class="sub-menu">
+                            <li><a href="{% url "gallery" %}">{% trans "Фото in UA" %}</a></li>
+                            {% for c in cat %}
+                                <li><a href="{% url "category" id=c.pk %}">{{ c.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li><a href="{% url 'about' %}" title="">{% trans "ПРО НАС" %}</a></li>
+                    <li><a href="https://dimcharity.com/" title="">{% trans "ПІДТРИМАЙ UA" %}</a></li>
+                    {% if request.user.is_authenticated %}
+                        &emsp;&emsp; <a>{% trans "Вітаю," %} {{ request.user }}</a>
+                        &emsp;&emsp;
+                        <li><a href="{% url 'logout' %}">{% trans "Вийти" %}</a></li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}">{% trans "УВІЙТИ" %}</a></li>
+                    {% endif %}
+                </ul>
             </nav>
         </div>
     </header>

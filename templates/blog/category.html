@@ -112,9 +112,6 @@
     <div class="row masonry-wrap">
         <div class="masonry">
             <div class="grid-sizer"></div>
-            {#            {% if not posts %}#}
-            {#                <h4>{% trans "Пошук не дав результатів. Спробуйте ввести інші ключові слова." %}</h4>#}
-            {#            {% endif %}#}
             {% for post in posts %}
                 <article class="masonry__brick entry format-standard" data-aos="fade-up">
                     <div class="entry__thumb">
@@ -150,25 +147,6 @@
                     </div>
                 </article>
             {% endfor %}
-            <div class="row">
-                <div class="col-full">
-                    <nav class="pgn">
-                        <ul>
-                            {% if posts.has_previous %}
-                                <li><a class="pgn__prev"
-                                       href="?page={{ posts.previous_page_number }}">&larr; {% trans "Попередня" %}</a>
-                                </li>
-                            {% endif %}
-                            {% trans "Сторінка " %}{{ posts.number }} {% trans "з " %}{{ posts.paginator.num_pages }}
-                            {% if posts.has_next %}
-                                <li><a class="pgn__next"
-                                       href="?page={{ posts.next_page_number }}">{% trans "Наступна" %} &rarr;</a></li>
-                            {% endif %}
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </div>
 </section>
 <section class="s-extra">
     <div class="row top">
@@ -260,7 +238,7 @@
 <div class="akeconsa-udaneles">
     <a href="#" title={% trans "Вверх" %}><span class="fas fa-angle-up"></span></a>
 </div>
-<footer style="padding-top: 0; padding-bottom: 0;">
+<footer style="padding-top: 0; padding-bottom: 0;   ">
     <ul class="social">
         <li><a href="#">
             <ion-icon name="logo-facebook"></ion-icon>
