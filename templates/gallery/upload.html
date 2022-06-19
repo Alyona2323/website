@@ -6,7 +6,7 @@
             {% csrf_token %}
             {{ form }}
             <button type="submit" style="width: 50%; display: inline-block; box-sizing: border-box; margin-top: 20px;"
-                    class="btn btn-default">{% trans "Завантажити" %}</button>
+                    class="btn btn-default"><p>{% trans "ЗАВАНТАЖИТИ" %}</p></button>
         </form>
     </div>
     <br>
@@ -17,6 +17,7 @@
 
 
     <style>
+
         input[type=text], input[type=submit], input[type="file" i] {
             width: 50%;
             padding: 12px 20px;
@@ -25,6 +26,17 @@
             border: 1px solid #ccc;
             box-sizing: border-box;
         }
+
+        button[type="submit"] {
+            font-size: 1.4rem;
+        }
+
+        button[type="submit"]:hover, :focus p {
+            color: #FFFFFF;
+            background: #151515;
+            font-size: 1.6rem;
+        }
+
     </style>
 
 {% endblock %}

@@ -112,9 +112,6 @@
     <div class="row masonry-wrap">
         <div class="masonry">
             <div class="grid-sizer"></div>
-            {#            {% if not posts %}#}
-            {#                <h4>{% trans "Пошук не дав результатів. Спробуйте ввести інші ключові слова." %}</h4>#}
-            {#            {% endif %}#}
             {% for post in posts %}
                 <article class="masonry__brick entry format-standard" data-aos="fade-up">
                     <div class="entry__thumb">
@@ -140,7 +137,7 @@
                             <span class="entry__meta-links">
                                  <img src={% static "profile.png" %} height= 6%; width=6%;
                                       title="{% trans "Автор" %}">
-                               <a href="{% url "index" %}">{{ post.user }}</a>
+                                <a href="{% url "index" %}">{{ post.user }}</a>
                                 <br/>
                                   <img src={% static "category.png" %} height= 6%; width=6%;
                                        title="{% trans "Категорія" %}">  <a
@@ -152,89 +149,68 @@
             {% endfor %}
             <div class="row">
                 <div class="col-full">
-                    <nav class="pgn">
+                    <nav class="pgn" style="font-size: 19px; margin-bottom: -40px; margin-top: 30px;">
                         <ul>
                             {% if posts.has_previous %}
-                                <li><a class="pgn__prev"
-                                       href="?page={{ posts.previous_page_number }}">&larr; {% trans "Попередня" %}</a>
-                                </li>
+                                <a href="?page={{ posts.previous_page_number }}"><i class="left"></i></a>
                             {% endif %}
                             {% trans "Сторінка " %}{{ posts.number }} {% trans "з " %}{{ posts.paginator.num_pages }}
                             {% if posts.has_next %}
-                                <li><a class="pgn__next"
-                                       href="?page={{ posts.next_page_number }}">{% trans "Наступна" %} &rarr;</a></li>
+                                <a href="?page={{ posts.next_page_number }}"><i class="right"></i></a>
                             {% endif %}
                         </ul>
                     </nav>
                 </div>
             </div>
         </div>
+    </div>
 </section>
 <section class="s-extra">
     <div class="row top">
         <div class="col-eight md-six tab-full popular">
-            <h3>{% trans 'Дошка оголошень' %}</h3>
-            <div class="block-1-2 block-m-full popular__posts">
+            <h3 style="margin-left: 170px;">{% trans 'Дошка оголошень' %}</h3>
+            <div class="block-1-2 block-m-full popular__posts"  style="margin-top: 50px;">
                 <article class="col-block popular__post">
                     <a href="#0" class="popular__thumb">
-                        <img src="images/thumbs/small/wheel-150.jpg" alt="">
+                        <img src="images/thumbs/small/wheel-150.jpg" alt="" style="height: 170px; width: 170px;">
                     </a>
-                    <h5>{% trans "Доля безпритульних котиків та песиків у твоїх руках." %}</h5>
+                    <h5 style="height: 120px; width: 120px; margin-bottom: 30px; margin-left: 100px;">{% trans "Доля безпритульних котиків та песиків у твоїх руках." %}</h5>
                     <section class="popular__meta">
-                        <span class="popular__author"> <a
+                        <span class="popular__author" style="height: 120px; width: 120px;  margin-left: 100px;"> <a
                                 href="https://happypaw.ua/ua/">{% trans "ДОПОМОГТИ " %}</a></span>
                     </section>
                 </article>
+                <article class="col-block popular__post" style="margin-bottom: 120px;">
+                    <a href="#0" class="popular__thumb">
+                        <img src={% static "images.png" %} alt="" style="height: 170px; width: 170px;">
+                    </a>
+{#                    <h5 style="height: 120px; width: 120px; margin-bottom: 30px; margin-left: 100px;"><a href="#0">{% trans "Тут може бути ваша реклама" %}</a></h5>#}
+{#                    <section class="popular__meta">#}
+{#                        <span class="popular__author" style="height: 120px; width: 120px;  margin-left: 100px;"> <a href="#0">{% trans "Посилання на рекламу" %}</a></span>#}
+{#                    </section>#}
+                </article>
                 <article class="col-block popular__post">
                     <a href="#0" class="popular__thumb">
-                        <img src={% static "logo_ua.PNG" %} alt="">
+                        <img src="images/thumbs/small/tulips-150.jpg" alt="" style="height: 170px; width: 170px;">
                     </a>
-                    <h5><a href="#0">текст</a></h5>
+                    <h5 style="height: 120px; width: 120px; margin-bottom: 30px; margin-left: 100px;">текст 5</h5>
                     <section class="popular__meta">
-                        <span class="popular__author"> <a href="#0"> 1111111</a></span>
+                        <span class="popular__author" style="height: 120px; width: 120px;  margin-left: 100px;"><a href="#0">44</a></span>
                     </section>
                 </article>
                 <article class="col-block popular__post">
                     <a href="#0" class="popular__thumb">
-                        <img src="images/thumbs/small/cookies-150.jpg" alt="">
+                        <img src={% static "images.png" %} alt="" style="height: 170px; width: 170px;">
                     </a>
-                    <h5>текст 3</h5>
-                    <section class="popular__meta">
-                        <span class="popular__author"><a href="#0"> 3333333</a></span>
-                    </section>
-                </article>
-                <article class="col-block popular__post">
-                    <a href="#0" class="popular__thumb">
-                        <img src="images/thumbs/small/beetle-150.jpg" alt="">
-                    </a>
-                    <h5>текст 4</h5>
-                    <section class="popular__meta">
-                        <span class="popular__author"><a href="#0"> 4444444</a></span>
-                    </section>
-                </article>
-                <article class="col-block popular__post">
-                    <a href="#0" class="popular__thumb">
-                        <img src="images/thumbs/small/tulips-150.jpg" alt="">
-                    </a>
-                    <h5>текст 5</h5>
-                    <section class="popular__meta">
-                        <span class="popular__author"><a href="#0"> 555555</a></span>
-                    </section>
-                </article>
-                <article class="col-block popular__post">
-                    <a href="#0" class="popular__thumb">
-                        <img src="images/thumbs/small/salad-150.jpg" alt="">
-                    </a>
-                    <h5>текст 6</h5>
-                    <section class="popular__meta">
-                        <span class="popular__author"><a href="#0"> 66666</a></span>
-
-                    </section>
+{#                    <h5 style="height: 120px; width: 120px; margin-bottom: 30px; margin-left: 100px;">{% trans "Тут може бути ваша реклама" %}</h5>#}
+{#                    <section class="popular__meta">#}
+{#                        <span class="popular__author" style="height: 120px; width: 120px;  margin-left: 100px;"><a href="#0">{% trans "Посилання на рекламу" %}</a></span>#}
+{#                    </section>#}
                 </article>
             </div>
         </div>
         <div class="col-four md-six tab-full about">
-            <h3>{% trans 'Про Україну' %}</h3>
+            <h3  style="margin-left: 70px;">{% trans 'Про Україну' %}</h3>
             <p>
                 {% trans 'Україна – найбільша країна в Європі. Країна з багатою та різноманітною культурою, батьківщина всесвітньо відомих митців та літераторів.' %}
             </p>
@@ -265,7 +241,7 @@
         <li><a href="#">
             <ion-icon name="logo-facebook"></ion-icon>
         </a></li>
-        <li><a  href="#">
+        <li><a href="#">
             <ion-icon name="logo-twitter"></ion-icon>
         </a></li>
         <li><a href="#">
@@ -287,3 +263,23 @@
 </body>
 </html>
 
+<style>i.right, i.left {
+    border: solid black;
+    border-width: 0 4px 4px 0;
+    display: inline-block;
+    padding: 7px;
+    margin-right: 18px;
+    margin-left: 18px;
+}
+
+.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
+</style>

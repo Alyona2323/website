@@ -23,7 +23,7 @@
             {{ post.total_likes }}&emsp;&emsp;
             <a href="{% url 'comment' post.pk %}"><img style="  height: 4%;
     width:3%;" src={% static "chat-g3d0a937c1_1280.png" %} alt="UA_online" title="{% trans "Коментувати" %}"></a>&emsp;&emsp;
-            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{% trans "Поділитись: " %}
+            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{% trans "Поділитись: " %}
             <li>
                 <a href="http://www.facebook.com/sharer/sharer.php?s=100&p%5Btitle%5D=[TITLE]&p%5Bsummary%5D=[TEXT]&p%5Burl%5D=[LINK]&p%5Bimages%5D%5B0%5D=[IMAGE]"
                    target="_blank"><i class="fab fa-facebook-f"></i></a></li>
@@ -37,65 +37,64 @@
         </ul>
         {% for comment in post.comment_set.all %}
             <h5>{{ comment.created }}<br> {{ comment.user }}: {{ comment.text }}
-                {% if request.user.is_authenticated %}
+                {% if request.user == post.user %}
+                    <p style="text-align: right;">
                     <a href="{% url 'update_comment' comment.pk %}">{% trans "Редагувати" %}</a>
                     |
                     <a href="{% url 'delete_comment' comment.pk %}">{% trans "Вилучити" %}</a>
-                {% endif %}</h5>
-
+                {% endif %}</p></h5>
         {% endfor %}
         <br>
         <br>
         <br>
-        <br>
-        <br>
-        {% if request.user.is_authenticated %}
-            {% trans "Якщо Ви автор цієї новини, то Ви можете її" %}
+        {% if request.user == post.user %}
             <a href="{% url 'edit' post.pk %}">{% trans "Редагувати" %}</a>
             {% trans "або" %}
-            <a href="{% url 'delete' post.pk %}">{% trans "Вилучити." %}</a>
+            <a href="{% url 'delete' post.pk %}">{% trans "Вилучити" %}</a>
+            {% trans "цю новину." %}
         {% endif %}
 
-
         <style>
+
             *, ::after, ::before {
-            box-sizing: border-box;
-        }
+                box-sizing: border-box;
+            }
 
-        ul.social-icons {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
+            ul.social-icons {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
 
-        .social-icons li {
-            display: inline-block;
-            margin-right: 15px;
-        }
+            .social-icons li {
+                display: inline-block;
+                margin-right: 15px;
+            }
 
-        .social-icons li a {
-            color: #000000 !important;
-            text-decoration: none;
-            -webkit-transition: 0.5s;
-            transition: 0.5s;
-        }
+            .social-icons li a {
+                color: #000000 !important;
+                text-decoration: none;
+                -webkit-transition: 0.5s;
+                transition: 0.5s;
+            }
 
-        .social-icons li i {
-            font-size: 20px;
-            color: #000000;
-        }
+            .social-icons li i {
+                font-size: 20px;
+                color: #000000;
+            }
+
         </style>
 
-
-        <script>(function (d, e, s) {
-            if (d.getElementById("likebtn_wjs")) return;
-            a = d.createElement(e);
-            m = d.getElementsByTagName(e)[0];
-            a.async = 1;
-            a.id = "likebtn_wjs";
-            a.src = s;
-            m.parentNode.insertBefore(a, m)
-        })(document, "script", "//w.likebtn.com/js/w/widget.js");</script>
+        <script>
+            (function (d, e, s) {
+                if (d.getElementById("likebtn_wjs")) return;
+                a = d.createElement(e);
+                m = d.getElementsByTagName(e)[0];
+                a.async = 1;
+                a.id = "likebtn_wjs";
+                a.src = s;
+                m.parentNode.insertBefore(a, m)
+            })(document, "script", "//w.likebtn.com/js/w/widget.js");</script>
         <script>
             $('#like').click(function () {
                 console.log('like')
