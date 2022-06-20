@@ -7,12 +7,16 @@
         <h1>{{ post.title }}</h1>
         <hr>
         <img src={% static "profile.png" %} height= 1%; width=1%;
-             title="{% trans "Автор" %}"> <a href="{% url "index" %}">{{ post.user }}</a>
-        <br>
-        <span class="glyphicon glyphicon-time"></span>
+             title="{% trans "Автор" %}"><a href="{% url "index" %}">{{ post.user }}</a>
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
         <img style="height: 1%; width:1%;" src={% static "clock.png" %} alt="UA_online"
              title="{% trans "Опубліковано" %}"> {{ post.published_date }}
+        <p><img src={% static "category.png" %} height= 1%; width=1%;
+                title="{% trans "Категорія" %}"><a
+                href="{% url "category" post.category.id %}">{{ post.category }}</a></p>
         <hr>
+        <span class="glyphicon glyphicon-time"></span>
         <img class="img-responsive" src="{{ post.img.url }}" alt="">
         <hr>
         <p>{{ post.content }}</p>
@@ -37,7 +41,7 @@
         </ul>
         {% for comment in post.comment_set.all %}
             <h5>{{ comment.created }}<br> {{ comment.user }}: {{ comment.text }}
-                {% if request.user == post.user %}
+                {% if request.user == comment.user %}
                     <p style="text-align: right;">
                     <a href="{% url 'update_comment' comment.pk %}">{% trans "Редагувати" %}</a>
                     |
@@ -94,7 +98,9 @@
                 a.id = "likebtn_wjs";
                 a.src = s;
                 m.parentNode.insertBefore(a, m)
-            })(document, "script", "//w.likebtn.com/js/w/widget.js");</script>
+            })(document, "script", "//w.likebtn.com/js/w/widget.js");
+        </script>
+
         <script>
             $('#like').click(function () {
                 console.log('like')
@@ -113,6 +119,7 @@
                 });
             })
         </script>
+
     </div>
 
 {% endblock %}

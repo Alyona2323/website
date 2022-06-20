@@ -15,7 +15,7 @@ class Category(models.Model):
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=30, verbose_name=_("Назва"))
+    title = models.CharField(max_length=32, verbose_name=_("Назва"))
     content = models.TextField(verbose_name=_("Опис"))
     published_date = models.DateTimeField(auto_created=True, verbose_name=_("Дата опублікування"))
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name=_("Категорія"))
@@ -46,4 +46,3 @@ class Comment(models.Model):
     class Meta:
         verbose_name = _("Коментар")
         verbose_name_plural = _("Коментарі")
-

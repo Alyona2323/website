@@ -27,16 +27,16 @@
                 <a class="logo" href="{% url "index" %}"><img src={% static "logo_ua.PNG" %} alt="UA_online"></a>
             </div>
             <ul class="header__social">
-                <li><a href="#">
+                <li><a href="https://ru-ru.facebook.com/tsn.ua/">
                     <ion-icon name="logo-facebook"></ion-icon>
                 </a></li>
-                <li><a href="#">
+                <li><a href="https://twitter.com/tsnua?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">
                     <ion-icon name="logo-twitter"></ion-icon>
                 </a></li>
-                <li><a href="#">
+                <li><a href="https://www.instagram.com/tsnua/">
                     <ion-icon name="logo-instagram"></ion-icon>
                 </a></li>
-                <li><a href="#">
+                <li><a href="https://www.youtube.com/watch?v=WY8sDvZdWEA&ab_channel=%D0%A2%D0%A1%D0%9D">
                     <ion-icon name="logo-youtube"></ion-icon>
                 </a></li>
             </ul>
@@ -119,10 +119,11 @@
                 <article class="masonry__brick entry format-standard" data-aos="fade-up">
                     <div class="entry__thumb">
                         <a href="{% url "post" post.pk %}" class="entry__thumb-link">
-                            <img src="{{ post.img.url }}" alt="">
+                            <img src="{{ post.img.url }}" style="width: 330px; height: 280px; object-fit: cover;"
+                                 alt="">
                         </a>
                     </div>
-                    <div class="entry__text">
+                    <div class="entry__text" style=" height: 380px; object-fit: cover;">
                         <div class="entry__header">
                             <div class="entry__date">
                                 <img src={% static "clock.png" %} height= 5%; width=5%;
@@ -140,87 +141,73 @@
                             <span class="entry__meta-links">
                                  <img src={% static "profile.png" %} height= 6%; width=6%;
                                       title="{% trans "Автор" %}">
-                               <a href="{% url "index" %}">{{ post.user }}</a>
+                                <a href="{% url "index" %}">{{ post.user }}</a>
                                 <br/>
                                   <img src={% static "category.png" %} height= 6%; width=6%;
-                                       title="{% trans "Категорія" %}">  <a
+                                       title="{% trans "Категорія" %}"><a
                                     href="{% url "category" post.category.id %}">{{ post.category }}</a>
                             </span>
                         </div>
                     </div>
                 </article>
             {% endfor %}
+        </div>
+    </div>
 </section>
 <section class="s-extra">
     <div class="row top">
         <div class="col-eight md-six tab-full popular">
-            <h3>{% trans 'Дошка оголошень' %}</h3>
-            <div class="block-1-2 block-m-full popular__posts">
+            <h3 style="margin-left: 170px;">{% trans 'Дошка оголошень' %}</h3>
+            <div class="block-1-2 block-m-full popular__posts" style="margin-top: 50px;">
                 <article class="col-block popular__post">
                     <a href="#0" class="popular__thumb">
-                        <img src="images/thumbs/small/wheel-150.jpg" alt="">
+                        <img src={% static "dogs.jpg" %} alt="" style="height: 170px; width: 170px;">
                     </a>
-                    <h5>{% trans "Доля безпритульних котиків та песиків у твоїх руках." %}</h5>
+                    <h5 style="height: 120px; width: 150px; margin-bottom: 30px; margin-left: 100px; font-size: 19px;">{% trans "Доля безпритульних котиків та песиків у твоїх руках." %}</h5>
                     <section class="popular__meta">
-                        <span class="popular__author"> <a
+                        <span class="popular__author"
+                              style="height: 120px; width: 120px;  margin-left: 100px; font-size: 17px;"> <a
                                 href="https://happypaw.ua/ua/">{% trans "ДОПОМОГТИ " %}</a></span>
                     </section>
                 </article>
-                <article class="col-block popular__post">
-                    <a href="#0" class="popular__thumb">
-                        <img src={% static "logo_ua.PNG" %} alt="">
+                <article class="col-block popular__post" style="margin-bottom: 120px;">
+                    <a href="{% url "about" %}" class="popular__thumb">
+                        <img src={% static "images.png" %} alt="" style="height: 170px; width: 170px;">
                     </a>
-                    <h5><a href="#0">текст</a></h5>
-                    <section class="popular__meta">
-                        <span class="popular__author"> <a href="#0"> 1111111</a></span>
-                    </section>
+                    {#                    <h5 style="height: 120px; width: 150px; margin-bottom: 30px; margin-left: 100px; font-size: 19px;"><a href="#0">{% trans "Тут може бути ваша реклама" %}</a></h5>#}
+                    {#                    <section class="popular__meta">#}
+                    {#                        <span class="popular__author" style="height: 120px; width: 120px;  margin-left: 100px; font-size: 17px;"> <a href="#0">{% trans "ЗАМОВИТИ" %}</a></span>#}
+                    {#                    </section>#}
                 </article>
                 <article class="col-block popular__post">
                     <a href="#0" class="popular__thumb">
-                        <img src="images/thumbs/small/cookies-150.jpg" alt="">
+                        <img src={% static "children.jpg" %} alt="Контакти" style="height: 170px; width: 170px;">
                     </a>
-                    <h5>текст 3</h5>
+                    <h5 style="height: 120px; width: 150px; margin-bottom: 30px; margin-left: 100px; font-size: 19px;">{% trans "У нас війна. Мільйони дітей постраждали. Дітям потрібна наша спільна" %}</h5>
                     <section class="popular__meta">
-                        <span class="popular__author"><a href="#0"> 3333333</a></span>
+                        <span class="popular__author"
+                              style="height: 120px; width: 120px;  margin-left: 100px; font-size: 17px;"><a
+                                href="https://voices.org.ua/">{% trans "ДОПОМОГА" %}</a></span>
                     </section>
                 </article>
                 <article class="col-block popular__post">
-                    <a href="#0" class="popular__thumb">
-                        <img src="images/thumbs/small/beetle-150.jpg" alt="">
+                    <a href="{% url "about" %}" class="popular__thumb">
+                        <img src={% static "images.png" %} alt="Контакти" style="height: 170px; width: 170px;">
                     </a>
-                    <h5>текст 4</h5>
-                    <section class="popular__meta">
-                        <span class="popular__author"><a href="#0"> 4444444</a></span>
-                    </section>
-                </article>
-                <article class="col-block popular__post">
-                    <a href="#0" class="popular__thumb">
-                        <img src="images/thumbs/small/tulips-150.jpg" alt="">
-                    </a>
-                    <h5>текст 5</h5>
-                    <section class="popular__meta">
-                        <span class="popular__author"><a href="#0"> 555555</a></span>
-                    </section>
-                </article>
-                <article class="col-block popular__post">
-                    <a href="#0" class="popular__thumb">
-                        <img src="images/thumbs/small/salad-150.jpg" alt="">
-                    </a>
-                    <h5>текст 6</h5>
-                    <section class="popular__meta">
-                        <span class="popular__author"><a href="#0"> 66666</a></span>
-
-                    </section>
+                    {#                    <h5 style="height: 120px; width: 150px; margin-bottom: 30px; margin-left: 100px; font-size: 19px;">{% trans "Тут може бути ваша реклама" %}</h5>#}
+                    {#                    <section class="popular__meta">#}
+                    {#                        <span class="popular__author" style="height: 120px; width: 120px;  margin-left: 100px;"><a href="#0">{% trans "ЗАМОВИТИ" %}</a></span>#}
+                    {#                    </section>#}
                 </article>
             </div>
         </div>
         <div class="col-four md-six tab-full about">
-            <h3>{% trans 'Про Україну' %}</h3>
-            <p>
-                {% trans 'Україна – найбільша країна в Європі. Країна з багатою та різноманітною культурою, батьківщина всесвітньо відомих митців та літераторів.' %}
+            <h3>{% trans 'Війна Росії проти України' %}</h3>
+            <p style="font-size: 17px;">
+                {% trans '24 лютого Росія розпочала масштабне вторгнення до України по всій довжині спільного кордону і з території Білорусі. Україна чинить запеклий опір' %}
             </p>
-            <p>
-                {% trans 'Україна – це держава зі славним і, водночас, трагічним минулим. Люди різних національностей долучилися до творення її історії. Також Україну формують спадщини різних держав, до яких вона колись входила, перш за все Австро-Угорщини, Російської імперії та Радянського Союзу.' %}
+            <p style="font-size: 17px;">
+                {% trans 'Армія Росії обстріляла прикордонні застави, завдала удари з повітря по понад 40 об єктах військової інфраструктури майже усіх регіонів України. Розпочався рух танкових колон і живої сили. Путін назвав це «спецоперацією» з метою «демілітаризації і денацифікації України».' %}
             </p>
             <p><a href="https://studyinukraine.gov.ua/chomu-ukraina/pro-ukrainu/"
                   title="">{% trans "Докладніше..." %}</a></p>
@@ -241,18 +228,18 @@
 <div class="akeconsa-udaneles">
     <a href="#" title={% trans "Вверх" %}><span class="fas fa-angle-up"></span></a>
 </div>
-<footer style="padding-top: 0; padding-bottom: 0;   ">
+<footer style="padding-top: 0; padding-bottom: 0;">
     <ul class="social">
-        <li><a href="#">
+        <li><a href="https://ru-ru.facebook.com/tsn.ua/">
             <ion-icon name="logo-facebook"></ion-icon>
         </a></li>
-        <li><a href="#">
+        <li><a href="https://twitter.com/tsnua?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">
             <ion-icon name="logo-twitter"></ion-icon>
         </a></li>
-        <li><a href="#">
+        <li><a href="https://www.instagram.com/tsnua/">
             <ion-icon name="logo-instagram"></ion-icon>
         </a></li>
-        <li><a href="#">
+        <li><a href="https://www.youtube.com/watch?v=WY8sDvZdWEA&ab_channel=%D0%A2%D0%A1%D0%9D">
             <ion-icon name="logo-youtube"></ion-icon>
         </a></li>
     </ul>
@@ -267,4 +254,35 @@
 </footer>
 </body>
 </html>
+
+<style>
+
+    i.right, i.left {
+        border: solid black;
+        border-width: 0 4px 4px 0;
+        display: inline-block;
+        padding: 7px;
+        margin-right: 18px;
+        margin-left: 18px;
+    }
+
+    .right {
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+    }
+
+    .left {
+        transform: rotate(135deg);
+        -webkit-transform: rotate(135deg);
+    }
+
+</style>
+
+
+
+
+
+
+
+
 
