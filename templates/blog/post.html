@@ -7,14 +7,14 @@
         <h1>{{ post.title }}</h1>
         <hr>
         <img src={% static "profile.png" %} height= 1%; width=1%;
-             title="{% trans "Автор" %}"><a href="{% url "index" %}">{{ post.user }}</a>
+             title="{% trans "Автор" %}"><a href="{% url "user" post.user.id %}"> {{ post.user }}</a>
         &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
         &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
         <img style="height: 1%; width:1%;" src={% static "clock.png" %} alt="UA_online"
              title="{% trans "Опубліковано" %}"> {{ post.published_date }}
         <p><img src={% static "category.png" %} height= 1%; width=1%;
                 title="{% trans "Категорія" %}"><a
-                href="{% url "category" post.category.id %}">{{ post.category }}</a></p>
+                href="{% url "category" post.category.id %}"> {{ post.category }}</a></p>
         <hr>
         <span class="glyphicon glyphicon-time"></span>
         <img class="img-responsive" src="{{ post.img.url }}" alt="">

@@ -138,11 +138,11 @@
                             <span class="entry__meta-links">
                                  <img src={% static "profile.png" %} height= 6%; width=6%;
                                       title="{% trans "Автор" %}">
-                                <a href="{% url "index" %}">{{ post.user }}</a>
+                                <a href="{% url "user" post.user.id  %}"> {{ post.user }}</a>
                                 <br/>
                                   <img src={% static "category.png" %} height= 6%; width=6%;
                                        title="{% trans "Категорія" %}"><a
-                                    href="{% url "category" post.category.id %}">{{ post.category }}</a>
+                                    href="{% url "category" post.category.id %}"> {{ post.category }}</a>
                             </span>
                         </div>
                     </div>

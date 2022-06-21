@@ -112,9 +112,6 @@
     <div class="row masonry-wrap">
         <div class="masonry">
             <div class="grid-sizer"></div>
-            {% if not posts %}
-                <h4>{% trans "Пошук не дав результатів. Спробуйте ввести інші ключові слова." %}</h4>
-            {% endif %}
             {% for post in posts %}
                 <article class="masonry__brick entry format-standard" data-aos="fade-up">
                     <div class="entry__thumb">
@@ -141,7 +138,7 @@
                             <span class="entry__meta-links">
                                  <img src={% static "profile.png" %} height= 6%; width=6%;
                                       title="{% trans "Автор" %}">
-                                <a href="{% url "user" post.user.id  %}"> {{ post.user }}</a>
+                                <a href="{% url "index" %}">{{ post.user }}</a>
                                 <br/>
                                   <img src={% static "category.png" %} height= 6%; width=6%;
                                        title="{% trans "Категорія" %}"><a

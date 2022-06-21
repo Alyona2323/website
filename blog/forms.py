@@ -19,7 +19,7 @@ class CommentForm(forms.ModelForm):
 
 class LoginForm(forms.Form):
     login = forms.CharField(label=_("Логін"), max_length=16, min_length=3)
-    password = forms.CharField(label=_("Пароль"), max_length=16, min_length=5)
+    password = forms.CharField(widget=forms.PasswordInput, label=_("Пароль"), max_length=16, min_length=5)
 
 
 class UserRegistrationForm(forms.ModelForm):

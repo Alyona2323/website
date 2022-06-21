@@ -8,6 +8,7 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('ua_online/about/', views.about, name="about"),
     path('ua_online/post/<int:id>/', views.post, name="post"),
+    path('ua_online/user/<int:id>/', views.user, name="user"),
     path('ua_online/category/<int:id>/', views.category, name="category"),
     path('ua_online/search/', views.search, name="search"),
     path('ua_online/create/', CreatePostView.as_view(), name="create"),

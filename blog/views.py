@@ -25,6 +25,13 @@ def category(request, id=None):
     return render(request, "blog/category.html", context)
 
 
+def user(request, id=None):
+    posts = Post.objects.filter(user__pk=id).order_by("-published_date")
+    context = {"posts": posts}
+    context.update(get_categories())
+    return render(request, "blog/user.html", context)
+
+
 def register_user(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
