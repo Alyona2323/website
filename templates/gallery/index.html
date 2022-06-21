@@ -8,10 +8,10 @@
     {% for img in photos %}
         <div class="container">
             <div class="card-columns" style="float: left;  width: 240px; height: 240px; display: inline-block;">
-                <a class="card card-reveal">
+                <a class="card card-reveal" style="object-fit: cover;" href="{{ img.image.url }}">
                     <img class="card-img-top" src="{{ img.image.url }}" title="{{ img.description }}"/>
                     <div class="card-body">
-                        <div class="card-title">{{ img.description }}</div>
+                        <div class="card-title">{{ img.description }} </div>
                     </div>
                 </a>
             </div>
@@ -110,6 +110,10 @@
     </style>
 
 {% endblock %}
+
+
+
+
 
 
 
