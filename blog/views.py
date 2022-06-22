@@ -22,14 +22,14 @@ def category(request, id=None):
     posts = Post.objects.filter(category__pk=id).order_by("-published_date")
     context = {"posts": posts}
     context.update(get_categories())
-    return render(request, "blog/category.html", context)
+    return render(request, "blog/main.html", context)
 
 
 def user(request, id=None):
     posts = Post.objects.filter(user__pk=id).order_by("-published_date")
     context = {"posts": posts}
     context.update(get_categories())
-    return render(request, "blog/user.html", context)
+    return render(request, "blog/main.html", context)
 
 
 def register_user(request):
@@ -115,7 +115,7 @@ def search(request):
         posts = []
     context = {"posts": posts}
     context.update(get_categories())
-    return render(request, "blog/result_search.html", context)
+    return render(request, "blog/main.html", context)
 
 
 class CreatePostView(LoginRequiredMixin, CreateView):

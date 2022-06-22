@@ -18,22 +18,22 @@ footer {
 
 .social li,
 .menu li {
-    list-style: none; /*удалить черные маркеры*/
+    list-style: none;
 }
 
 .social li a {
-    font-size: 28px; /*размер иконок*/
-    color: #fff; /*цвет иконок*/
+    font-size: 28px;
+    color: #fff;
     margin: 0 10px;
-    display: inline-block; /*отображать как строчно-блочный элемент*/
-    transition: 0.5s; /*плавный переход*/
+    display: inline-block;
+    transition: 0.5s;
 }
 
 .menu li a {
-    color: #fff; /*цвет ссылок меню*/
-    opacity: 0.75; /*значение прозрачности*/
+    color: #fff;
+    opacity: 0.75;
     margin: 0 15px;
-    text-decoration: none; /*ссылка без подчеркивания*/
+    text-decoration: none;
     display: inline-block;
 }
 

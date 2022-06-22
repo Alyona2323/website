@@ -606,7 +606,6 @@ textarea {
 
 input[type="email"]:focus,
 input[type="number"]:focus,
-input[type="search"]:focus,
 input[type="text"]:focus,
 input[type="tel"]:focus,
 input[type="url"]:focus,
@@ -668,7 +667,7 @@ label > input[type="checkbox"], label > input[type="radio"] {
 input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus
 input:-webkit-autofill, textarea:-webkit-autofill, textarea:-webkit-autofill:hover
 textarea:-webkit-autofill:focus, select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus {
-    -webkit-text-fill-color: #0054a5;
+    -webkit-text-fill-color: #000000;
     transition: background-color 5000s ease-in-out 0s;
 }
 

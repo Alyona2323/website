@@ -48,6 +48,7 @@
                     <i class="fa fa-search" aria-hidden="true"></i>
                 </span>
             </form>
+            <a class="header__toggle-menu" href="#0" title="Menu"><span>Menu</span></a>
             <nav class="header__nav-wrap">
                 <ul class="header__nav" style="font-size: 18px;">
                     <li class="current"><a href="{% url 'index' %}">{% trans "ГОЛОВНА СТОРІНКА" %}</a></li>
@@ -70,6 +71,7 @@
                         <li><a href="{% url 'login' %}">{% trans "УВІЙТИ" %}</a></li>
                     {% endif %}
                 </ul>
+                <a href="#0" title="Close Menu" class="header__overlay-close close-mobile-menu">Close</a>
             </nav>
         </div>
     </header>
@@ -141,7 +143,7 @@
                             <span class="entry__meta-links">
                                  <img src={% static "profile.png" %} height= 6%; width=6%;
                                       title="{% trans "Автор" %}">
-                                <a href="{% url "user" post.user.id  %}"> {{ post.user }}</a>
+                                <a href="{% url "user" post.user.id %}"> {{ post.user }}</a>
                                 <br/>
                                   <img src={% static "category.png" %} height= 6%; width=6%;
                                        title="{% trans "Категорія" %}"><a
@@ -174,6 +176,13 @@
                     <a href="{% url "about" %}" class="popular__thumb">
                         <img src={% static "images.png" %} alt="" style="height: 170px; width: 170px;">
                     </a>
+                    <h5 style="height: 120px; width: 150px; margin-bottom: -20px; margin-left: 100px; font-size: 19px;">
+                        <a href="#0">{% trans "Тут може бути ваша реклама" %}</a></h5>
+                    <section class="popular__meta">
+                        <span class="popular__author"
+                              style="height: 120px; width: 120px;  margin-left: 100px; font-size: 17px;"> <a
+                                href="#0">{% trans "ЗАМОВИТИ" %}</a></span>
+                    </section>
                 </article>
                 <article class="col-block popular__post">
                     <a href="#0" class="popular__thumb">
@@ -190,6 +199,12 @@
                     <a href="{% url "about" %}" class="popular__thumb">
                         <img src={% static "images.png" %} alt="Контакти" style="height: 170px; width: 170px;">
                     </a>
+                    <h5 style="height: 120px; width: 150px; margin-bottom: -20px; margin-left: 100px; font-size: 19px;">{% trans "Тут може бути ваша реклама" %}</h5>
+                    <section class="popular__meta">
+                        <span class="popular__author"
+                              style="height: 120px; width: 120px;  margin-left: 100px; font-size: 17px;"><a
+                                href="#0">{% trans "ЗАМОВИТИ" %}</a></span>
+                    </section>
                 </article>
             </div>
         </div>
@@ -201,8 +216,9 @@
             <p style="font-size: 17px;">
                 {% trans 'Армія Росії обстріляла прикордонні застави, завдала удари з повітря по понад 40 об єктах військової інфраструктури майже усіх регіонів України. Розпочався рух танкових колон і живої сили. Путін назвав це «спецоперацією» з метою «демілітаризації і денацифікації України».' %}
             </p>
-            <p><a href="https://uk.wikipedia.org/wiki/%D0%A0%D0%BE%D1%81%D1%96%D0%B9%D1%81%D1%8C%D0%BA%D0%BE-%D1%83%D0%BA%D1%80%D0%B0%D1%97%D0%BD%D1%81%D1%8C%D0%BA%D0%B0_%D0%B2%D1%96%D0%B9%D0%BD%D0%B0_(%D0%B7_2014)"
-                  title="">{% trans "Докладніше..." %}</a></p>
+            <p>
+                <a href="https://uk.wikipedia.org/wiki/%D0%A0%D0%BE%D1%81%D1%96%D0%B9%D1%81%D1%8C%D0%BA%D0%BE-%D1%83%D0%BA%D1%80%D0%B0%D1%97%D0%BD%D1%81%D1%8C%D0%BA%D0%B0_%D0%B2%D1%96%D0%B9%D0%BD%D0%B0_(%D0%B7_2014)"
+                   title="">{% trans "Докладніше..." %}</a></p>
         </div>
     </div>
     <div class="row bottom tags-wrap">

@@ -44,7 +44,7 @@
             <form method="post" action="{% url "search" %}" class="input-group">
                 {% csrf_token %}
                 <input type="search" name="query" class="form-control"/>
-                <span class="input-group-btn" style="transform: translate(10px, -100px);"
+                <span class="input-group-btn" style="transform: translate(12px, -100px);"
                       onclick="search_form.submit()">
                    <i class="fa fa-search" aria-hidden="true"></i>
       </span>
@@ -73,6 +73,7 @@
                         <li><a href="{% url 'login' %}">{% trans "УВІЙТИ" %}</a></li>
                     {% endif %}
                 </ul>
+                <a href="#0" title="Close Menu" class="header__overlay-close close-mobile-menu">Close</a>
             </nav>
         </div>
     </header>

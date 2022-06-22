@@ -4,14 +4,13 @@
 {% block content %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <div class="row" style="margin-top: -80px;">
+      <p style="margin-top: 50px; margin-bottom: -40px; text-align: right;"><img style="height: 1%; width:1%;" src={% static "clock.png" %} alt="UA_online"
+                                           title="{% trans "Опубліковано" %}"> {{ post.published_date }}</p>
         <h1>{{ post.title }}</h1>
         <hr>
+
         <img src={% static "profile.png" %} height= 1%; width=1%;
              title="{% trans "Автор" %}"><a href="{% url "user" post.user.id %}"> {{ post.user }}</a>
-        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-        <img style="height: 1%; width:1%;" src={% static "clock.png" %} alt="UA_online"
-             title="{% trans "Опубліковано" %}"> {{ post.published_date }}
         <p><img src={% static "category.png" %} height= 1%; width=1%;
                 title="{% trans "Категорія" %}"><a
                 href="{% url "category" post.category.id %}"> {{ post.category }}</a></p>
@@ -22,22 +21,25 @@
         <p>{{ post.content }}</p>
         <hr>
         <ul class="social-icons">
+            <ul class="social-icons" style="text-align: right;">
+                <li>{% trans "Поділитись: " %}
+                    <a href="http://www.facebook.com/sharer/sharer.php?s=100&p%5Btitle%5D=[TITLE]&p%5Bsummary%5D=[TEXT]&p%5Burl%5D=[LINK]&p%5Bimages%5D%5B0%5D=[IMAGE]"
+                       target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                <li>
+                    <a href="https://twitter.com/intent/tweet?original_referer=http%3A%2F%2Ffiddle.jshell.net%2F_display%2F&text=[TITLE]&url=[LINK]"
+                       target="_blank"><i class="fab fa-twitter"></i></a></li>
+                <li>
+                    <a href="https://www.pinterest.com/pin/create/bookmarklet/?description=<?=get_the_title($id)?>&url=[LINK]"
+                       target="_blank"><i class="fab fa-pinterest-square"></i></a></li>
+                <li><a href="https://www.linkedin.com/cws/share?url=[LINK]" target="_blank"><i
+                        class="fab fa-linkedin"></i></a></li>
+            </ul>
             <a href="#" id="like" style="font-size: 200%; color: #000000; :hover: #843534;"
                title="{% trans "Подобається" %}">&#10084</a>
             {{ post.total_likes }}&emsp;&emsp;
             <a href="{% url 'comment' post.pk %}"><img style="  height: 4%;
-    width:3%;" src={% static "chat-g3d0a937c1_1280.png" %} alt="UA_online" title="{% trans "Коментувати" %}"></a>&emsp;&emsp;
-            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{% trans "Поділитись: " %}
-            <li>
-                <a href="http://www.facebook.com/sharer/sharer.php?s=100&p%5Btitle%5D=[TITLE]&p%5Bsummary%5D=[TEXT]&p%5Burl%5D=[LINK]&p%5Bimages%5D%5B0%5D=[IMAGE]"
-                   target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-            <li>
-                <a href="https://twitter.com/intent/tweet?original_referer=http%3A%2F%2Ffiddle.jshell.net%2F_display%2F&text=[TITLE]&url=[LINK]"
-                   target="_blank"><i class="fab fa-twitter"></i></a></li>
-            <li>
-                <a href="https://www.pinterest.com/pin/create/bookmarklet/?description=<?=get_the_title($id)?>&url=[LINK]"
-                   target="_blank"><i class="fab fa-pinterest-square"></i></a></li>
-            <li><a href="https://www.linkedin.com/cws/share?url=[LINK]" target="_blank"><i class="fab fa-linkedin"></i></a>
+    width:3%;" src={% static "chat-g3d0a937c1_1280.png" %} alt="UA_online" title="{% trans "Коментувати" %}"></a>
+
         </ul>
         {% for comment in post.comment_set.all %}
             <h5>{{ comment.created }}<br> {{ comment.user }}: {{ comment.text }}

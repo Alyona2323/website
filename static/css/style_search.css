@@ -5,27 +5,27 @@
     left: 93%;
     transform: translate(-50%, -50%);
     background: #ffffff;
-    height: 40px;
+    height: 36px;
     border-radius: 30px;
-    padding: 10px;
+    padding: 11px;
 }
 
 .input-group:hover > .form-control {
-    width: 240px;
+    width: 200px;
     padding: 5px 6px 40px;
 }
 
 .input-group:hover > .input-group-btn {
     background: white;
-    color: black;
+    color: #19191b;
     text-decoration: none;
 }
 
 .input-group-btn {
     color: #eeeeee;
     float: right;
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     background: #2f3640;
     display: flex;
@@ -36,7 +36,7 @@
 }
 
 .input-group-btn > i {
-    font-size: 20px;
+    font-size: 23px;
 }
 
 .form-control {
@@ -49,6 +49,17 @@
     font-size: 16px;
     transition: 0.4s;
     line-height: 40px;
+    width: 60px;
     font-weight: bold;
     text-decoration: none;
 }
+
+input[type="search"] {
+    -webkit-text-fill-color: #000000;
+}
+
+input[type="search"]:focus {
+    color: #19191b;
+    border-bottom: #19191b;
+}
+
