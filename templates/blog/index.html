@@ -188,12 +188,11 @@
                     <a href="{% url "about" %}" class="popular__thumb">
                         <img src={% static "images.png" %} alt="" style="height: 170px; width: 170px;">
                     </a>
-                    <h5 style="height: 120px; width: 150px; margin-bottom: -20px; margin-left: 100px; font-size: 19px;">
-                        <a href="#0">{% trans "Тут може бути ваша реклама" %}</a></h5>
+                    <h5 style="height: 120px; width: 150px; margin-bottom: -20px; margin-left: 100px; font-size: 19px;">{% trans "Тут може бути ваша реклама" %}</h5>
                     <section class="popular__meta">
                         <span class="popular__author"
                               style="height: 120px; width: 120px;  margin-left: 100px; font-size: 17px;"> <a
-                                href="#0">{% trans "ЗАМОВИТИ" %}</a></span>
+                                href="{% url "about" %}">{% trans "ЗАМОВИТИ" %}</a></span>
                     </section>
                 </article>
                 <article class="col-block popular__post">
@@ -215,7 +214,7 @@
                     <section class="popular__meta">
                         <span class="popular__author"
                               style="height: 120px; width: 120px;  margin-left: 100px; font-size: 17px;"><a
-                                href="#0">{% trans "ЗАМОВИТИ" %}</a></span>
+                                href="{% url "about" %}">{% trans "ЗАМОВИТИ" %}</a></span>
                     </section>
                 </article>
             </div>

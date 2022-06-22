@@ -17,7 +17,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'crispy_forms',
     'blog',
     'gallery',
     'easy_thumbnails',
@@ -103,7 +102,6 @@ LOGIN_REDIRECT_URL = "index"
 LOGIN_URL = "blog_login"
 LOGOUT_URL = "blog_logout"
 
-# MEDIA_URL = "/media/"
 MEDIA_URL = "/uploads/"
 MEDIA_ROOT = BASE_DIR / 'uploads'
 
@@ -113,6 +111,6 @@ LANGUAGES = (
     ('en', _('English'))
 )
 DEFAULT_LANGUAGE = 1
-LOCALE_PATHS = [
-    BASE_DIR / 'locale'
-]
+# LOCALE_PATHS = [
+#     BASE_DIR / 'locale'
+# ]
