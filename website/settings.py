@@ -5,7 +5,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-m_fmk+udcn$(dr=16ec3#-ow$68*5@7+2^_40jm@im@fxw*^b8'
 
-# DEBUG = False
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
@@ -96,8 +95,6 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-CRISPY_TEMPLATE_PACK = 'bootstrap3'
-
 LOGIN_REDIRECT_URL = "index"
 LOGIN_URL = "blog_login"
 LOGOUT_URL = "blog_logout"
@@ -111,6 +108,3 @@ LANGUAGES = (
     ('en', _('English'))
 )
 DEFAULT_LANGUAGE = 1
-# LOCALE_PATHS = [
-#     BASE_DIR / 'locale'
-# ]

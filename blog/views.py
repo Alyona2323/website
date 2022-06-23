@@ -42,8 +42,8 @@ def register_user(request):
             return render(request, 'registration/register_done.html', {'new_user': new_user})
     else:
         form = UserRegistrationForm()
-        context = {'form': form}
-        context.update(get_categories())
+    context = {'form': form}
+    context.update(get_categories())
     return render(request, 'registration/register.html', context)
 
 

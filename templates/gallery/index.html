@@ -8,7 +8,8 @@
     {% for img in photos %}
         <div class="container">
             <div class="card-columns" style="float: left;  width: 240px; height: 240px; display: inline-block;">
-                <a class="card card-reveal" style="object-fit: cover;" href="{{ img.image.url }}">
+                <a class="card card-reveal" style=" height: 140px; width: 220px; object-fit: cover;"
+                   href="{{ img.image.url }}">
                     <img class="card-img-top" src="{{ img.image.url }}" title="{{ img.description }}"/>
                     <div class="card-body">
                         <div class="card-title">{{ img.description }}</div>
@@ -26,6 +27,7 @@
         input[type=text], input[type=password], input[type=submit] {
             width: 50%;
             padding: 12px 20px;
+
             margin: 8px 0;
             display: inline-block;
             border: 1px solid #ccc;
@@ -54,10 +56,10 @@
             overflow: hidden;
             position: relative;
             display: inline-block;
-            width: 310%;
+            width: 320%;
             word-wrap: break-word;
-            border-radius: 8px;
-            margin-bottom: 10px;
+            border-radius: 10px;
+            margin-bottom: 5px;
         }
 
         .card-reveal .card-body {

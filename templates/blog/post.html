@@ -4,14 +4,13 @@
 {% block content %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <div class="row" style="margin-top: -80px;">
-      <p style="margin-top: 50px; margin-bottom: -40px; text-align: right;"><img style="height: 1%; width:1%;" src={% static "clock.png" %} alt="UA_online"
-                                           title="{% trans "Опубліковано" %}"> {{ post.published_date }}</p>
+        <p style="margin-top: 50px; margin-bottom: -40px; text-align: right;"><img style="height: 1%; width:1%;"src={% static "clock.png" %} alt="UA_online" title="{% trans "Опубліковано" %}"> {{ post.published_date }}
+        </p>
         <h1>{{ post.title }}</h1>
         <hr>
-
         <img src={% static "profile.png" %} height= 1%; width=1%;
              title="{% trans "Автор" %}"><a href="{% url "user" post.user.id %}"> {{ post.user }}</a>
-        <p><img src={% static "category.png" %} height= 1%; width=1%;
+        <p><img src={% static "category.png" %} height=1%; width=1%;
                 title="{% trans "Категорія" %}"><a
                 href="{% url "category" post.category.id %}"> {{ post.category }}</a></p>
         <hr>
@@ -39,7 +38,6 @@
             {{ post.total_likes }}&emsp;&emsp;
             <a href="{% url 'comment' post.pk %}"><img style="  height: 4%;
     width:3%;" src={% static "chat-g3d0a937c1_1280.png" %} alt="UA_online" title="{% trans "Коментувати" %}"></a>
-
         </ul>
         {% for comment in post.comment_set.all %}
             <h5>{{ comment.created }}<br> {{ comment.user }}: {{ comment.text }}
