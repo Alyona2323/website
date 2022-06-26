@@ -5,9 +5,9 @@
         <form action="{% url "create" %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form }}
-            <button type="submit" style="width: 50%; display: inline-block; box-sizing: border-box; margin-top: 20px; "
-                    class="btn btn-default"><p>{% trans "ЗБЕРЕГТИ" %}</p></button>
         </form>
+        <button type="submit" style="width: 50%; display: inline-block; box-sizing: border-box; margin-top: 20px; "
+                class="btn btn-default"><p>{% trans "ЗБЕРЕГТИ" %}</p></button>
     </div>
 
     <style>
@@ -31,6 +31,7 @@
         }
 
         button[type="submit"] {
+            margin-top: 40px;
             font-size: 1.4rem;
         }
 

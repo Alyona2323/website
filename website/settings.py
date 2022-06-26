@@ -18,7 +18,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'gallery',
-    'easy_thumbnails',
 ]
 
 MIDDLEWARE = [
@@ -94,10 +93,6 @@ STATIC_ROOT = '/var/www/html/static'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
-
-LOGIN_REDIRECT_URL = "index"
-LOGIN_URL = "blog_login"
-LOGOUT_URL = "blog_logout"
 
 MEDIA_URL = "/uploads/"
 MEDIA_ROOT = BASE_DIR / 'uploads'
